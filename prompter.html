@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Prompter</title>
+	<style type="text/css">
+		html, body {
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+		html {
+			background: white;
+		  background: -moz-linear-gradient(left,  #31b8ed 0%, #ddf1f9 30%, #feffff 50%, #feffff 50%, #ddf1f9 70%, #31b8ed 100%); /* Firefox */
+			background: -webkit-linear-gradient(left,  #31b8ed 0%,#ddf1f9 30%,#feffff 50%,#feffff 50%,#ddf1f9 70%,#31b8ed 100%); /* Chrome, Safari */
+			background: -o-linear-gradient(left,  #31b8ed 0%,#ddf1f9 30%,#feffff 50%,#feffff 50%,#ddf1f9 70%,#31b8ed 100%); /* Opera */
+			background: -ms-linear-gradient(left,  #31b8ed 0%,#ddf1f9 30%,#feffff 50%,#feffff 50%,#ddf1f9 70%,#31b8ed 100%); /* IE */
+			background: linear-gradient(to right,  #31b8ed 0%,#ddf1f9 30%,#feffff 50%,#feffff 50%,#ddf1f9 70%,#31b8ed 100%); /* W3C */
+		}
+		div#lyrics {
+			padding: 10% 15% 50% 15%;
+			font-size: 85px;
+			font-weight: bold;
+			font-family: Georgia, serif;
+			text-align: center;
+		}
+		textarea#text {
+			resize: none;
+			width: 20%;
+			height: 90%;
+		}
+		button#prompt {
+			width: 20%;
+		}
+		div#menu {
+			position: fixed;
+			text-align: center;
+			top: 0;
+			height: 60px;
+			width: 100%;
+			margin: auto auto;
+		}
+	</style>
+</head>
+<body>
+	<div id="menu"> 
+		<textarea id="text"></textarea><br>
+		<button id="prompt">Prompt</button>
+	</div>
+	<div id="lyrics"></div>
+	<script type="text/javascript">
+		window.onload = function() {
+
+			document.getElementById("prompt").onclick = function () {
+				var text = document.getElementById("text").value;
+				var lyrics = text.replace(new RegExp("\n", "g"), "<br>");
+				document.getElementById('lyrics').innerHTML = lyrics;
+				document.body.scrollTop = 0;
+			};
+
+			var down = function (event) { document.body.scrollTop += 7;}
+			var up = function (event) { document.body.scrollTop -= 7;}
+
+			var interval = null;
+			var isClosed = false;
+
+			document.onkeydown = function (event) {
+				if (event.key === "PageDown" && interval == null) interval = setInterval(down, 10);
+				else if (event.key === "PageUp" && interval == null) interval = setInterval(up, 10);
+				else if (event.key === "Home") document.body.scrollTop = 0;
+				else if (event.key == "Escape") {
+					if(isClosed) {
+						document.getElementById("menu").style.top = "0px";
+						isClosed = false;
+					}
+					else {
+						document.getElementById("menu").style.top = "-100px";
+						isClosed = true;
+					}
+				}
+				console.log(event.key);
+			}
+			document.onkeyup = function (event) {
+				if ((event.key === "PageUp" || event.key === "PageDown") && interval != null) {
+					clearInterval(interval);
+					interval = null;
+				} 
+			}
+    };
+	</script>
+</body>
+</html>
