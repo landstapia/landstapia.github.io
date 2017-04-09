@@ -1,91 +1,115 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Prompter</title>
-	<style type="text/css">
-		html, body {
-			margin: 0;
-			padding: 0;
-			overflow: hidden;
-		}
-		html {
-			background: white;
-		  background: -moz-linear-gradient(left,  #31b8ed 0%, #ddf1f9 30%, #feffff 50%, #feffff 50%, #ddf1f9 70%, #31b8ed 100%); /* Firefox */
-			background: -webkit-linear-gradient(left,  #31b8ed 0%,#ddf1f9 30%,#feffff 50%,#feffff 50%,#ddf1f9 70%,#31b8ed 100%); /* Chrome, Safari */
-			background: -o-linear-gradient(left,  #31b8ed 0%,#ddf1f9 30%,#feffff 50%,#feffff 50%,#ddf1f9 70%,#31b8ed 100%); /* Opera */
-			background: -ms-linear-gradient(left,  #31b8ed 0%,#ddf1f9 30%,#feffff 50%,#feffff 50%,#ddf1f9 70%,#31b8ed 100%); /* IE */
-			background: linear-gradient(to right,  #31b8ed 0%,#ddf1f9 30%,#feffff 50%,#feffff 50%,#ddf1f9 70%,#31b8ed 100%); /* W3C */
-		}
-		div#lyrics {
-			padding: 10% 15% 50% 15%;
-			font-size: 85px;
-			font-weight: bold;
-			font-family: Georgia, serif;
-			text-align: center;
-		}
-		textarea#text {
-			resize: none;
-			width: 20%;
-			height: 90%;
-		}
-		button#prompt {
-			width: 20%;
-		}
-		div#menu {
-			position: fixed;
-			text-align: center;
-			top: 0;
-			height: 60px;
-			width: 100%;
-			margin: auto auto;
-		}
-	</style>
+  <title>Prompter</title>
+  <style type="text/css">
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    html {
+      background: blue;
+      /*
+      background: -moz-linear-gradient(left,  #31b8ed 0%, #ddf1f9 30%, #feffff 50%, #feffff 50%, #ddf1f9 70%, #31b8ed 100%);
+      background: -webkit-linear-gradient(left,  #31b8ed 0%,#ddf1f9 30%,#feffff 50%,#feffff 50%,#ddf1f9 70%,#31b8ed 100%); 
+      background: -o-linear-gradient(left,  #31b8ed 0%,#ddf1f9 30%,#feffff 50%,#feffff 50%,#ddf1f9 70%,#31b8ed 100%);
+      background: -ms-linear-gradient(left,  #31b8ed 0%,#ddf1f9 30%,#feffff 50%,#feffff 50%,#ddf1f9 70%,#31b8ed 100%);
+      background: linear-gradient(to right,  #31b8ed 0%,#ddf1f9 30%,#feffff 50%,#feffff 50%,#ddf1f9 70%,#31b8ed 100%);
+      */
+    }
+    div#lyrics {
+      padding: 15% 3% 75% 3%;
+      line-height: 110px;
+      font-size: 75px;
+      font-weight: bold;
+      font-family: Georgia, serif;
+      text-align: center;
+    }
+    textarea#text {
+      resize: none;
+      width: 20%;
+      height: 90%;
+    }
+    button#prompt {
+      width: 20%;
+    }
+    div#menu {
+      position: fixed;
+      text-align: center;
+      top: 0;
+      height: 60px;
+      width: 100%;
+      margin: auto auto;
+    }
+  </style>
 </head>
 <body>
-	<div id="menu"> 
-		<textarea id="text"></textarea><br>
-		<button id="prompt">Prompt</button>
-	</div>
-	<div id="lyrics"></div>
-	<script type="text/javascript">
-		window.onload = function() {
+  <input type="file" id="file" onchange="openFile(event)" style="visibility: hidden"><br>
+  <div id="lyrics"></div>
 
-			document.getElementById("prompt").onclick = function () {
-				var text = document.getElementById("text").value;
-				var lyrics = text.replace(new RegExp("\n", "g"), "<br>");
-				document.getElementById('lyrics').innerHTML = lyrics;
-				document.body.scrollTop = 0;
-			};
+  <script type="text/javascript">
+    var openFile = function(event) {
+      var reader = new FileReader();
+      reader.onload = function(){
+        var text = reader.result
+        var arr = text.split("\n");
+        if(arr[1].match(/\(.+\)/g)) {
+          arr[1] = "<b style='font-size: 90%'>" + arr[1] + "</b>";
+        }
+        if(arr[0].match(/HIMNO/)) {
+          arr[0] = "<b style='font-size: 90%; line-height: 200px'>" + arr[0] + "</b>";
+        }
 
-			var down = function (event) { document.body.scrollTop += 7;}
-			var up = function (event) { document.body.scrollTop -= 7;}
+        for(var i = 0; i < arr.length; i++) {
+          if(arr[i].match(/^.*\s?\.\s?\.\s?\.\s?.+/g)) {
+            var matchval = arr[i].match(/\s?\.\s?\.\s?\.\s?/)[0];
+            var newarr = arr[i].split(/\s?\.\s?\.\s?\.\s?/);
+            arr[i] = newarr[0] + "<i style='font-size : 90%;'>" + matchval + newarr[1] + "</i>";
+          }
+          if(arr[i].match(/\(/g)) {
+            arr[i] = "<i style='font-size : 90%;'>" + arr[i];
+          }
+          if(arr[i].match(/\)/g)) {
+            arr[i] = arr[i] + "</i>";
+          }
+        }
 
-			var interval = null;
-			var isClosed = false;
-
-			document.onkeydown = function (event) {
-				if (event.key === "PageDown" && interval == null) interval = setInterval(down, 10);
-				else if (event.key === "PageUp" && interval == null) interval = setInterval(up, 10);
-				else if (event.key === "Home") document.body.scrollTop = 0;
-				else if (event.key == "Escape") {
-					if(isClosed) {
-						document.getElementById("menu").style.top = "0px";
-						isClosed = false;
-					}
-					else {
-						document.getElementById("menu").style.top = "-100px";
-						isClosed = true;
-					}
-				}
-				console.log(event.key);
-			}
-			document.onkeyup = function (event) {
-				if ((event.key === "PageUp" || event.key === "PageDown") && interval != null) {
-					clearInterval(interval);
-					interval = null;
-				} 
-			}
+        document.getElementById('lyrics').innerHTML = arr.join("<br>");
+        document.body.scrollTop = 0;
+      };
+      reader.readAsText(event.target.files[0]);
     };
-	</script>
+
+    window.onload = function() {
+      var down_slow = function (event) { document.body.scrollTop += 1;}
+      var up_slow = function (event) { document.body.scrollTop -= 1;}
+
+      var down_fast = function (event) { document.body.scrollTop += 5;}
+      var up_fast = function (event) { document.body.scrollTop -= 5;}
+
+      var interval = null;
+      var isClosed = false;
+
+      document.onkeydown = function (event) {
+        if (event.key === "1" && interval == null) interval = setInterval(down_slow, 10);
+        else if (event.key === "4" && interval == null) interval = setInterval(up_slow, 10);
+        else if (event.key === "2" && interval == null) interval = setInterval(down_fast, 10);
+        else if (event.key === "5" && interval == null) interval = setInterval(up_fast, 10);
+        else if (event.key === "Home") document.body.scrollTop = 0;
+        else if (event.key == "Escape") {
+          document.getElementById("file").click();
+        }
+        console.log(event.key);
+      }
+      document.onkeyup = function (event) {
+        var events = ["1", "4", "2", "5"];
+        if ((events.indexOf(event.key) !== -1) && interval != null) {
+          clearInterval(interval);
+          interval = null;
+        } 
+      }
+  };
+  </script>
 </body>
 </html>

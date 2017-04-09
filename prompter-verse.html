@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Prompter Verse</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+  <style type="text/css">
+    html, body {
+      font-family: 'Arial', sans-serif;
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    body {
+    /*
+      background-image: url(./background.jpg);
+      background-position: center;
+      background-size: 100%;
+    */
+      background-color: black;
+    }
+    div#container {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    div#verse {
+      color: white;
+      text-align: center;
+      margin-top: auto;
+      margin-bottom: auto;
+      font-size: 200px;
+      font-weight: bolder;
+    }
+    div#menu {
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+    }
+    input#display {
+      width: 100%;
+    }
+  </style>
+
+  <script type="text/javascript">
+    window.onload = function() {
+      document.onkeydown = function (event) {
+        if (event.key === "Enter"){
+          var verse = document.getElementById('display').value;
+          document.getElementById('verse').innerHTML = verse;
+        }
+      }
+  };
+  </script>
+</head>
+<body>
+  <div id="menu">
+    <input type="text" name="display" id="display">
+  </div>
+  <div id="container">
+    <div id="verse"></div>
+  </div>
+</body>
+</html>
