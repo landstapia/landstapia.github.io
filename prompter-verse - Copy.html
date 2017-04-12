@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Prompter Verse</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+  <style type="text/css">
+    html, body {
+      font-family: 'Arial', sans-serif;
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    body {
+    /*
+      background-image: url(./background.jpg);
+      background-position: center;
+      background-size: 100%;
+    */
+      background-color: black;
+    }
+    div#container {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    div#prompt {
+      margin-left: 1.5%;
+      color: white;
+      text-align: center;
+      margin-top: auto;
+      margin-bottom: auto;
+      font-size: 100px;
+      font-weight: bolder;
+    }
+    div#menu {
+      background-color: red;
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+    }
+    input#prompt-text {
+      margin: 0;
+      width: 95%;
+    }
+    input#prompt-size {
+      margin: 0;
+      width: 3%;
+    }
+  </style>
+
+  <script type="text/javascript">
+    window.onload = function() {
+      document.onkeydown = function (event) {
+        if (event.key === "Enter"){
+          var text = document.getElementById('prompt-text').value;
+          var size = document.getElementById('prompt-size').value;
+          document.getElementById('prompt').style.fontSize = size + "px";
+          document.getElementById('prompt').innerHTML = text;
+        }
+      }
+  };
+  </script>
+</head>
+<body>
+  <div id="menu-container">
+    
+  </div>
+  <div id="menu">
+    <input type="text" name="prompt-text" id="prompt-text">
+    <input type="int" name="prompt-size" id="prompt-size">
+  </div>
+  <div id="container">
+    <div id="prompt"></div>
+  </div>
+</body>
+</html>
