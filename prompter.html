@@ -8,28 +8,25 @@
       padding: 0;
       overflow: hidden;
     }
-    html {
-      background: blue;
-      /*
-      background: -moz-linear-gradient(left,  #31b8ed 0%, #ddf1f9 30%, #feffff 50%, #feffff 50%, #ddf1f9 70%, #31b8ed 100%);
-      background: -webkit-linear-gradient(left,  #31b8ed 0%,#ddf1f9 30%,#feffff 50%,#feffff 50%,#ddf1f9 70%,#31b8ed 100%); 
-      background: -o-linear-gradient(left,  #31b8ed 0%,#ddf1f9 30%,#feffff 50%,#feffff 50%,#ddf1f9 70%,#31b8ed 100%);
-      background: -ms-linear-gradient(left,  #31b8ed 0%,#ddf1f9 30%,#feffff 50%,#feffff 50%,#ddf1f9 70%,#31b8ed 100%);
-      background: linear-gradient(to right,  #31b8ed 0%,#ddf1f9 30%,#feffff 50%,#feffff 50%,#ddf1f9 70%,#31b8ed 100%);
-      */
+    .color-gradient {
+      background: -moz-linear-gradient(left,  #31b8ed 0%, #ddf1f9 40%, #feffff 50%, #feffff 50%, #ddf1f9 70%, #31b8ed 100%);
+      background: -webkit-linear-gradient(left,  #31b8ed 0%,#ddf1f9 40%,#feffff 50%,#feffff 50%,#ddf1f9 70%,#31b8ed 100%); 
+      background: -o-linear-gradient(left,  #31b8ed 0%,#ddf1f9 40%,#feffff 50%,#feffff 50%,#ddf1f9 70%,#31b8ed 100%);
+      background: -ms-linear-gradient(left,  #31b8ed 0%,#ddf1f9 40%,#feffff 50%,#feffff 50%,#ddf1f9 70%,#31b8ed 100%);
+      background: linear-gradient(to right,  #31b8ed 0%,#ddf1f9 40%,#feffff 50%,#feffff 50%,#ddf1f9 70%,#31b8ed 100%);
+      color: black;
     }
-    div#lyrics {
-      padding: 15% 3% 75% 3%;
-      line-height: 110px;
-      font-size: 75px;
-      font-weight: bold;
-      font-family: Georgia, serif;
-      text-align: center;
+    .color-chroma-blue {
+      background-color: blue;
+      color: black;
     }
-    textarea#text {
-      resize: none;
-      width: 20%;
-      height: 90%;
+    .color-black {
+      background-color: black;
+      color: white;
+    }
+    .color-white {
+      background-color: white;
+      color: black;
     }
     button#prompt {
       width: 20%;
@@ -42,13 +39,69 @@
       width: 100%;
       margin: auto auto;
     }
+    div#menu-container {
+      background-color: white;
+      border: 2px solid black;
+      text-align: center;
+      width: 100%;
+      padding: 2px;
+      position: fixed;
+    }
+    div#prompt-container {
+      padding: 15% 5% 75% 5%;
+      line-height: 110px;
+      font-size: 70px;
+      font-weight: bold;
+      font-family: Georgia, serif;
+      text-align: center;
+    }
+    input#prompt-text {
+      width: 75%;
+    }
+    input#prompt-size {
+      width: 11%;
+    }
   </style>
 </head>
-<body>
-  <input type="file" id="file" onchange="openFile(event)" style="visibility: hidden"><br>
-  <div id="lyrics"></div>
+<body class="color-gradient">
+  <div id="menu-container">
+    Text to Prompt: <input type="text" id="prompt-text"/>
+    Size: <input type="number" id="prompt-size"/>
+    <button type="button" onclick="setGradient()">Gradient</button>
+    <button type="button" onclick="setChromaBlue()">Chroma Blue</button>
+    <button type="button" onclick="setBlack()">Black</button>
+    <button type="button" onclick="setWhite()">White</button>
+    <input type="file" id="prompt-file" onchange="openFile(event)"/>
+  </div>
+  <div id="prompt-container"><div id="prompt"></div></div>
 
   <script type="text/javascript">
+    var setGradient = function () {
+      document.body.className = "color-gradient";
+    }
+    var setChromaBlue = function () {
+      document.body.className = "color-chroma-blue";
+    }
+    var setBlack = function () {
+      document.body.className = "color-black";
+      document.getElementById('prompt-container')
+    }
+    var setWhite = function () {
+      document.body.className = "color-white";
+    }
+    var setPrompt = function () {
+      var text = document.getElementById('prompt-text').value;
+      var size = document.getElementById('prompt-size').value;
+      var container = "<p style='font-size: " + size + "px;'>" + text + "</p>";
+      document.getElementById('prompt-container').innerHTML = container;
+      document.body.scrollTop = 0;
+    }
+    document.getElementById('prompt-text').onkeydown = function (event) {
+      if (event.key === "Enter") setPrompt();
+    }
+    document.getElementById('prompt-size').onkeydown = function (event) {
+      if (event.key === "Enter") setPrompt();
+    }
     var openFile = function(event) {
       var reader = new FileReader();
       reader.onload = function(){
@@ -75,7 +128,7 @@
           }
         }
 
-        document.getElementById('lyrics').innerHTML = arr.join("<br>");
+        document.getElementById('prompt-container').innerHTML = arr.join("<br>");
         document.body.scrollTop = 0;
       };
       reader.readAsText(event.target.files[0]);
