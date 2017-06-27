@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>Prompter</title>
+  <style type="text/css">
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    .TEXT_SOLO {
+      color: black!important;
+      font-weight: bold!important;
+      font-style: normal!important;
+    }
+    .TEXT_TAGL {
+      color: black;
+    }
+    .TEXT_ENGL {
+      color: darkmagenta;
+    }
+    .TEXT_PORT {
+      color: blue;
+    }
+    .TEXT_SPAN {
+      color: black;
+      font-weight: normal;
+      font-style: italic;
+    }
+    .TEXT_BICL {
+      color: orange;
+    }
+    .TEXT_CEBU {
+      color: green;
+    }
+    .TEXT_KAPM {
+      color: green;
+      font-weight: normal;
+    }
+    .COLOR_GRAD {
+      background-image: url("images/bg.jpg");
+      background-size: 100%;
+      background-color: none;
+      color: black;
+    }
+    .COLOR_BCHR {
+      background-image: url("images/bg-blue.jpg");
+      background-size: 100%;
+      background-color: none;
+      color: black;
+    }
+    .COLOR_GCHR {
+      background-image: url("images/bg-green.jpg");
+      background-size: 100%;
+      background-color: none;
+      color: black;
+    }
+    .COLOR_RCHR {
+      background-image: url("images/bg-red.jpg");
+      background-size: 100%;
+      background-color: none;
+      color: black;
+    }
+    .COLOR_BLCK {
+      background-image: url("images/bg-black.jpg");
+      background-size: 100%;
+      background-color: none;
+      color: white!important;
+    }
+    .COLOR_WHTE {
+      background-image: url("images/bg-white.jpg");
+      background-size: 100%;
+      background-color: none;
+      color: black;
+    }
+    .FONT_GRGA {
+      font-family: Georgia, sans-serif!important;
+    }
+    .FONT_ARIL {
+      font-family: Arial, sans-serif!important;
+    }
+    .FONT_ROBO {
+      font-family: Roboto, sans-serif!important;
+    }
+    div#menu-container {
+      color: black;
+      border: 2px solid black;
+      padding: 1rem 4rem;
+      position: fixed!important;
+      height: 16rem;
+      width: 100%;
+      top: 0;
+    }
+    div#prompt-container {
+      padding: 15% 3% 75% 3%;
+      line-height: 130%;
+      font-size: 70px;
+      font-weight: 800;
+      text-align: center; 
+      width: 100%;
+    }
+    p {
+      margin: 0;
+    }
+    .bold {
+      font-weight: bold;
+    }
+  </style>
+  <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script> 
+  <script type="text/javascript" src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
+  <link rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css"></link>
+</head>
+<body class="COLOR_GRAD">
+  <div id="prompt-container" class="FONT_GRGA"></div>
+  <div class="white" id="menu-container">
+    <div class="row">
+      <div class="col s3">
+        <p class="bold">Language:</p>
+        <p>
+          <input type="checkbox" class="filled-in lang-checkbox" name="TAGL" id="TAGL"/>
+          <label class="teal-text" for="TAGL">Tagalog</label>
+        </p>
+        <p>
+          <input type="checkbox" class="filled-in lang-checkbox" name="KAPM" id="KAPM"/>
+          <label class="teal-text" for="KAPM">Kapampangan</label>
+        </p>
+        <p>
+          <input type="checkbox" class="filled-in lang-checkbox" name="CEBU" id="CEBU"/>
+          <label class="teal-text" for="CEBU">Cebuano</label>
+        </p>
+        <p>
+          <input type="checkbox" class="filled-in lang-checkbox" name="BICL" id="BICL"/>
+          <label class="teal-text" for="BICL">Bicol</label>
+        </p>
+        <p>
+          <input type="checkbox" class="filled-in lang-checkbox" name="PORT" id="PORT"/>
+          <label class="teal-text" for="PORT">Brazilian Portuguese</label>
+        </p>
+        <p>
+          <input type="checkbox" class="filled-in lang-checkbox" name="SPAN" id="SPAN"/>
+          <label class="teal-text" for="SPAN">Latin Spanish</label>
+        </p>
+        <p>
+          <input type="checkbox" class="filled-in lang-checkbox" name="ENGL" id="ENGL"/>
+          <label class="teal-text" for="ENGL">English</label>
+        </p>
+      </div>
+      <div class="col s2">
+        <p class="bold">Background Image:</p>
+        <p>
+          <input type="radio" class="color-checkbox" name="color-checkbox" id="COLOR_GRAD" checked/>
+          <label class="teal-text" for="COLOR_GRAD">Default Gradient</label>
+        </p>
+        <p>
+          <input type="radio" class="color-checkbox" name="color-checkbox" id="COLOR_BCHR"/>
+          <label class="teal-text" for="COLOR_BCHR">Blue Chroma</label>
+        </p>
+        <p>
+          <input type="radio" class="color-checkbox" name="color-checkbox" id="COLOR_GCHR"/>
+          <label class="teal-text" for="COLOR_GCHR">Green Chroma</label>
+        </p>
+        <p>
+          <input type="radio" class="color-checkbox" name="color-checkbox" id="COLOR_RCHR"/>
+          <label class="teal-text" for="COLOR_RCHR">Red Chroma</label>
+        </p>
+        <p>
+          <input type="radio" class="color-checkbox" name="color-checkbox" id="COLOR_BLCK"/>
+          <label class="teal-text" for="COLOR_BLCK">Black</label>
+        </p>
+        <p>
+          <input type="radio" class="color-checkbox" name="color-checkbox" id="COLOR_WHTE"/>
+          <label class="teal-text" for="COLOR_WHTE">White</label>
+        </p>
+      </div>
+      <div class="col s2">
+        <p class="bold">Font:</p>
+        <p>
+          <input type="radio" class="font-checkbox" name="font-checkbox" id="FONT_GRGA" checked/>
+          <label class="teal-text" for="FONT_GRGA">Georgia (Default)</label>
+        </p>
+        <p>
+          <input type="radio" class="font-checkbox" name="font-checkbox" id="FONT_ARIL"/>
+          <label class="teal-text" for="FONT_ARIL">Arial</label>
+        </p>
+        <p>
+          <input type="radio" class="font-checkbox" name="font-checkbox" id="FONT_ROBO"/>
+          <label class="teal-text" for="FONT_ROBO">Roboto</label>
+        </p>
+      </div>
+      <div class="col s5">
+        <p class="bold">File:</p>
+        <div class="file-field input-field">
+          <div class="btn">
+            <span>Choose File</span>
+            <input id="lyrics-selector" type="file">
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path" type="text">
+          </div>
+        </div>
+        <p class="bold">Size:</p>
+        <p class="range-field">
+          <input type="range" id="size" min="50" max="120" />
+        </p>
+        <p><b>Usage: </b>Use the <b>Up</b> and <b>Down</b> arrow keys to scroll. Hold <b>Ctrl</b> to scroll faster.</p>
+      </div>
+  </div>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      // Initialization (Something weird happens)
+      $('menu-container').css({top: "0px"});
+      var LYRICS = "";
+      var MARKUP = {
+        "TAGL" : "TAGL=>",
+        "ENGL" : "ENGL=>",
+        "PORT" : "PORT=>",
+        "SPAN" : "SPAN=>",
+        "CEBU" : "CEBU=>",
+        "KAPM" : "KAPM=>",
+        "BICL" : "BICL=>",
+        "COMM" : "COMM=>"
+      }
+      var REGEX = {
+        "TAGL" : new RegExp('^' + MARKUP["TAGL"], 'g'),
+        "ENGL" : new RegExp('^' + MARKUP["ENGL"], 'g'),
+        "PORT" : new RegExp('^' + MARKUP["PORT"], 'g'),
+        "SPAN" : new RegExp('^' + MARKUP["SPAN"], 'g'),
+        "CEBU" : new RegExp('^' + MARKUP["CEBU"], 'g'),
+        "KAPM" : new RegExp('^' + MARKUP["KAPM"], 'g'),
+        "BICL" : new RegExp('^' + MARKUP["BICL"], 'g'),
+        "COMM" : new RegExp('^' + MARKUP["COMM"], 'g')
+      }
+      var VISIBLE = {
+        "TAGL" : false,
+        "ENGL" : false,
+        "PORT" : false,
+        "SPAN" : false,
+        "CEBU" : false,
+        "KAPM" : false,
+        "BICL" : false
+      }
+      var CURR_COLOR = "COLOR_GRAD";
+      var CURR_FONT = "FONT_GRGA";
+      var FPS = 16.67;
+
+      var setLanguage = function () {
+        var SELECTED_LANG = 0;
+        for (var key in VISIBLE) {
+          if(VISIBLE[key]) SELECTED_LANG++; 
+        }
+
+        var lyrics_array_input = null;
+        var lyrics_array_parsed = [];
+
+        if (SELECTED_LANG <= 2) 
+          lyrics_array_input = LYRICS.split("\/").join("<br>").split("\n");
+        else 
+          lyrics_array_input = LYRICS.split("\/").join("").split("\n");
+
+        var SELECTED_LANG = 0;
+        for (var key in VISIBLE) {
+          if(VISIBLE[key] && LYRICS.match(new RegExp(MARKUP[key], 'g'))) 
+            SELECTED_LANG++; 
+        }
+        for(var i = 0; i < lyrics_array_input.length; i++) {
+          var formatted = '';
+          if(VISIBLE["TAGL"] && lyrics_array_input[i].match(REGEX["TAGL"])) {
+            formatted = "<a class='TEXT_TAGL'>" + lyrics_array_input[i].split(MARKUP["TAGL"])[1] + "</a>";
+            lyrics_array_parsed.push(formatted);
+          }
+          if(VISIBLE["ENGL"] && lyrics_array_input[i].match(REGEX["ENGL"])) {
+            formatted = "<a class='TEXT_ENGL";
+            if(SELECTED_LANG === 1) 
+              formatted += " TEXT_SOLO";
+            formatted += "'>" + lyrics_array_input[i].split(MARKUP["ENGL"])[1] + "</a>";
+            lyrics_array_parsed.push(formatted);
+          }
+          if(VISIBLE["PORT"] && lyrics_array_input[i].match(REGEX["PORT"])) {
+            formatted = "<a class='TEXT_PORT";
+            if(SELECTED_LANG === 1) 
+              formatted += " TEXT_SOLO"; 
+            formatted += "'>" + lyrics_array_input[i].split(MARKUP["PORT"])[1] + "</a>";
+            lyrics_array_parsed.push(formatted);
+          }
+          if(VISIBLE["SPAN"] && lyrics_array_input[i].match(REGEX["SPAN"])) {
+            formatted = "<a class='TEXT_SPAN";
+            if(SELECTED_LANG === 1) 
+              formatted += " TEXT_SOLO";
+            formatted += "'>" + lyrics_array_input[i].split(MARKUP["SPAN"])[1] + "</a>";
+            lyrics_array_parsed.push(formatted);
+          }
+          if(VISIBLE["CEBU"] && lyrics_array_input[i].match(REGEX["CEBU"])) {
+            formatted = "<a class='TEXT_CEBU";
+            if(SELECTED_LANG === 1) 
+              formatted += " TEXT_SOLO";
+            formatted += "'>" + lyrics_array_input[i].split(MARKUP["CEBU"])[1] + "</a>";
+            lyrics_array_parsed.push(formatted);
+          }
+          if(VISIBLE["KAPM"] && lyrics_array_input[i].match(REGEX["KAPM"])) {
+            formatted = "<a class='TEXT_KAPM";
+            if(SELECTED_LANG === 1) 
+              formatted += " TEXT_SOLO";
+            formatted += "'>" + lyrics_array_input[i].split(MARKUP["KAPM"])[1] + "</a>";
+            lyrics_array_parsed.push(formatted);
+          }
+          if(VISIBLE["BICL"] && lyrics_array_input[i].match(REGEX["BICL"])) {
+            var formatted = "<a class='TEXT_BICL";
+            if(SELECTED_LANG === 1) 
+              formatted += " TEXT_SOLO";
+            formatted += "'>" + lyrics_array_input[i].split(MARKUP["BICL"])[1] + "</a>";
+            lyrics_array_parsed.push(formatted);
+          }
+          if(SELECTED_LANG > 0 && lyrics_array_input[i].match(REGEX["COMM"])) {
+            lyrics_array_parsed.push(lyrics_array_input[i].split(MARKUP["COMM"])[1]);
+          }
+          
+          if (lyrics_array_input[i] && lyrics_array_input[i].length < 2 ){
+            if(SELECTED_LANG > 2) lyrics_array_parsed.push(' ');
+            if(lyrics_array_input[i+1] && lyrics_array_input[i+1].length < 2) {
+              if(SELECTED_LANG <= 2) lyrics_array_parsed.push(' ');
+              else lyrics_array_parsed.pop();
+            }
+          }
+        }
+
+        for(var i = 0; i < lyrics_array_parsed.length; i++) {
+          if(lyrics_array_parsed[i].match(/^.*\s?\.\s?\.\s?\.\s?.+/g)) {
+            var matchval = lyrics_array_parsed[i].match(/\s?\.\s?\.\s?\.\s?/)[0];
+            var newarr = lyrics_array_parsed[i].split(/\s?\.\s?\.\s?\.\s?/);
+            lyrics_array_parsed[i] = newarr[0] + "<i style='font-size : 90%;'>" + matchval + newarr[1] + "</i>";
+          }
+          if(lyrics_array_parsed[i].match(/(HIMNO|HINO|HYMN|#)/g)) {
+            lyrics_array_parsed[i] = "<i>" + lyrics_array_parsed[i] + "</i>";
+          }
+          if(lyrics_array_parsed[i].match(/\(/g)) {
+            lyrics_array_parsed[i] = "<i style='font-size : 90%;'>" + lyrics_array_parsed[i];
+          }
+          if(lyrics_array_parsed[i].match(/\)/g)) {
+            lyrics_array_parsed[i] = lyrics_array_parsed[i] + "</i>";
+          }
+        }
+        document.getElementById('prompt-container').innerHTML = lyrics_array_parsed.join("<br>");
+        document.body.scrollTop = 0;   
+      }
+
+      // Event handler when choosing file
+      $("#lyrics-selector").on('change', function (event) {
+        jQuery.get("/_txt/" + $(this).prop('files')[0].name, function(data) {
+           LYRICS = data;
+           setLanguage();
+        });
+      })
+
+      // Event handler when selecting background color checkboxes
+      $("input[type=radio].color-checkbox").on('click', function () {
+        $("body").removeClass(CURR_COLOR);
+        $("body").addClass(this.id);
+        CURR_COLOR = this.id;
+      });
+
+      // Event handler when selecting font checkboxes
+      $("input[type=radio].font-checkbox").on('click', function () {
+        $("#prompt-container").removeClass(CURR_FONT);
+        $("#prompt-container").addClass(this.id);
+        CURR_FONT = this.id;
+      });
+
+      // Event handler when ticking the language
+      $("input[type=checkbox].lang-checkbox").on('click', function () {
+        VISIBLE[this.name] = !VISIBLE[this.name];
+        setLanguage();
+      });
+
+      // Event handler for text size
+      $("input[type=range]").on('input', function () {
+        var size = $(this).val() + "px";
+        $("#prompt-container").css({'fontSize': size});
+      });
+
+      var down_slow = function (event) { document.body.scrollTop += 1;}
+      var up_slow = function (event) { document.body.scrollTop -= 1;}
+      var down_fast = function (event) { document.body.scrollTop += 7;}
+      var up_fast = function (event) { document.body.scrollTop -= 7;}
+
+      var interval = null;
+      var isClosed = false;
+
+      $(document).on('keydown', function (event) {
+        if (event.key === "ArrowDown" && event.ctrlKey && interval == null) 
+          interval = setInterval(down_fast, FPS);
+        else if (event.key === "ArrowUp" && event.ctrlKey && interval == null) 
+          interval = setInterval(up_fast, FPS);
+        else if (event.key === "ArrowDown" && interval == null) 
+          interval = setInterval(down_slow, FPS);
+        else if (event.key === "ArrowUp" && interval == null) 
+          interval = setInterval(up_slow, FPS);
+        else if (event.key === "Home") document.body.scrollTop = 0;
+        
+        if (event.key == "Escape") {
+          if (isClosed) {
+            isClosed = !isClosed;
+            $("#menu-container").animate({
+              top: "0px",
+            }, 500);
+          }
+          else{ 
+            isClosed = !isClosed;
+            $( "#menu-container" ).animate({
+              top: "-250px",
+            }, 500);           
+          }
+        }
+      });
+
+      $(document).on('keyup', function (event) {
+        var events = ["ArrowDown", "ArrowUp"];
+        if ((events.indexOf(event.key) !== -1) && interval != null) {
+          clearInterval(interval);
+          interval = null;
+        } 
+      });
+    });
+  </script>
+</body>
+</html>
