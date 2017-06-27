@@ -347,10 +347,22 @@
 
       // Event handler when choosing file
       $("#lyrics-selector").on('change', function (event) {
-        jQuery.get("/_txt/" + $(this).prop('files')[0].name, function(data) {
-           LYRICS = data;
-           setLanguage();
-        });
+        $.ajax({
+          url: '/_txt/' +  $(this).prop('files')[0].name,
+          type: 'GET',
+          success: function(data){
+            LYRICS = data;
+            setLanguage();
+          },
+          error: function(data) {
+            var reader = new FileReader();
+            reader.onload = function(){
+              LYRICS = reader.result;
+              setLanguage();
+            };
+            reader.readAsText(event.target.files[0]);
+          }
+        })        
       })
 
       // Event handler when selecting background color checkboxes
