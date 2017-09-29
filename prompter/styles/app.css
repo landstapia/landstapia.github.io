@@ -1,0 +1,108 @@
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+body {
+  margin: 0;
+  overflow: hidden;
+  width: 100%;
+}
+#wrapper {
+  position: absolute;
+  width: 100%;
+}
+.TEXT_SOLO {
+  color: black!important;
+  font-weight: bold!important;
+  font-style: normal!important;
+}
+.TEXT_TAGL {
+  color: black;
+}
+.TEXT_ENGL {
+  color: darkmagenta;
+}
+.TEXT_PORT {
+  color: blue;
+}
+.TEXT_SPAN {
+  color: black;
+  font-weight: normal;
+  font-style: italic;
+}
+.TEXT_BICL {
+  color: orange;
+}
+.TEXT_CEBU {
+  color: green;
+}
+.TEXT_KAPM {
+  color: green;
+  font-weight: normal;
+}
+.COLOR_GRAD {
+  background-image: url("../images/bg.jpg");
+  background-size: 100%;
+  background-color: none;
+  color: black;
+}
+.COLOR_BCHR {
+  background-image: url("../images/bg-blue.jpg");
+  background-size: 100%;
+  background-color: none;
+  color: black;
+}
+.COLOR_GCHR {
+  background-image: url("../images/bg-green.jpg");
+  background-size: 100%;
+  background-color: none;
+  color: black;
+}
+.COLOR_RCHR {
+  background-image: url("../images/bg-red.jpg");
+  background-size: 100%;
+  background-color: none;
+  color: black;
+}
+.COLOR_BLCK {
+  background-image: url("../images/bg-black.jpg");
+  background-size: 100%;
+  background-color: none;
+  color: white!important;
+}
+.COLOR_WHTE {
+  background-image: url("../images/bg-white.jpg");
+  background-size: 100%;
+  background-color: none;
+  color: black;
+}
+.FONT_GRGA {
+  font-family: Georgia, sans-serif!important;
+}
+.FONT_ARIL {
+  font-family: Arial, sans-serif!important;
+}
+div#menu-container {
+  color: black;
+  padding: 1rem 2rem;
+  position: fixed!important;
+  height: 16rem;
+  width: 100%;
+  bottom: 0;
+}
+div#prompt-container {
+  padding: 15% 3% 75% 3%;
+  line-height: 130%;
+  font-size: 85px;
+  font-weight: 800;
+  text-align: center; 
+  width: 100%;
+  top: 0!important;
+}
+p {
+  margin: 0;
+}
+.bold {
+  font-weight: bold;
+}
