@@ -90,6 +90,7 @@ div#menu-container {
   height: 16rem;
   width: 100%;
   bottom: 0;
+  z-index: 999;
 }
 div#prompt-container {
   padding: 15% 3% 75% 3%;

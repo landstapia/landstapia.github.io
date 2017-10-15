@@ -174,11 +174,43 @@ $(document).ready(function() {
       },
       error: function(data) {
         var reader = new FileReader();
-        reader.onload = function(){
-          LYRICS = reader.result;
-          setLanguage();
-        };
-        reader.readAsText(event.target.files[0]);
+        var extension = event.target.files[0].name.split('.').pop().toLowerCase();
+
+        var imageTypes = ["jpg", "jpeg"];
+        var docTypes = ["txt"];
+
+        var isImage = imageTypes.indexOf(extension) > -1;
+        var isTxt = docTypes.indexOf(extension) > -1;
+
+        console.log(extension);
+        if (isImage) {
+          reader.readAsDataURL(event.target.files[0]);
+          reader.onload = function(){
+            var elem = document.createElement("img");
+            elem.src = reader.result;
+            elem.setAttribute("id", "img-lyrics")
+            elem.setAttribute("style", "position:absolute;left:0;width:100%;top:0")
+            
+            $('.lang-checkbox').attr('disabled', 'true');
+            $('.color-checkbox').attr('disabled', 'true');
+            $('.font-checkbox').attr('disabled', 'true');
+
+            $("#prompt-container").append(elem);
+          };
+        }
+        if (isTxt) {
+          reader.readAsText(event.target.files[0]);
+          reader.onload = function(){
+            document.getElementById("img-lyrics").remove();
+
+            $('.lang-checkbox').removeAttr('disabled');
+            $('.color-checkbox').removeAttr('disabled');
+            $('.font-checkbox').removeAttr('disabled');
+
+            LYRICS = reader.result;
+            setLanguage();
+          };
+        }
       }
     })        
   })
