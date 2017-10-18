@@ -181,8 +181,7 @@ $(document).ready(function() {
 
         var isImage = imageTypes.indexOf(extension) > -1;
         var isTxt = docTypes.indexOf(extension) > -1;
-
-        console.log(extension);
+        
         if (isImage) {
           reader.readAsDataURL(event.target.files[0]);
           reader.onload = function(){
@@ -196,19 +195,20 @@ $(document).ready(function() {
             $('.font-checkbox').attr('disabled', 'true');
 
             $("#prompt-container").append(elem);
+            $("html").scrollTop(0);  
           };
         }
         if (isTxt) {
           reader.readAsText(event.target.files[0]);
           reader.onload = function(){
-            document.getElementById("img-lyrics").remove();
-
+          
             $('.lang-checkbox').removeAttr('disabled');
             $('.color-checkbox').removeAttr('disabled');
             $('.font-checkbox').removeAttr('disabled');
 
             LYRICS = reader.result;
             setLanguage();
+            document.getElementById("img-lyrics").remove();
           };
         }
       }
