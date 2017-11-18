@@ -78,10 +78,14 @@ body {
   color: black;
 }
 .FONT_GRGA {
-  font-family: Georgia, sans-serif!important;
+  font-family: Georgia!important;
 }
 .FONT_ARIL {
   font-family: Arial, sans-serif!important;
+}
+.FONT_GARA {
+  font-family: 'EB Garamond', serif!important;
+  line-height: 105%!important;
 }
 div#menu-container {
   color: black;
