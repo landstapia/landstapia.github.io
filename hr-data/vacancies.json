@@ -1,0 +1,32 @@
+[
+  {
+    "itemName" : "Accountant IV",
+    "itemNo" : "FIN-SPV-001-2018",
+    "summary" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vitae ipsum ac sapien maximus congue.",
+    "education" : [
+      "Bachelor's Degree relevant to the job"
+    ],
+    "eligibility" : [ 
+      {
+        "id" : "cs-prof",
+        "name" : "CS Professional (2nd Level Eligibility)"
+      }
+    ],
+    "experience" : [
+      "At least 5 years relevant experience"
+    ],
+    "training" : [
+      "16 hours of relevant training"
+    ],
+    "competencies" : [
+      {
+        "id" : "C1-2018",
+        "name" : "Integrity"
+      },
+      {
+        "id" : "C2-2018",
+        "name" : "Customer and Service Orientedness"
+      }
+    ]
+  }
+]
