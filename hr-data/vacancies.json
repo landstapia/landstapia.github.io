@@ -2,7 +2,7 @@
   {
     "itemName" : "Accountant IV",
     "itemNo" : "FIN-SPV-001-2018",
-    "sg" : "25",
+    "sg" : "SG25",
     "summary" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vitae ipsum ac sapien maximus congue.",
     "education" : [
       "Bachelor's Degree relevant to the job"
@@ -33,7 +33,7 @@
   {
     "itemName" : "Accountant III",
     "itemNo" : "FIN-SPV-002-2018",
-    "sg" : "22",
+    "sg" : "SG22",
     "summary" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vitae ipsum ac sapien maximus congue.",
     "education" : [
       "Bachelor's Degree relevant to the job"
