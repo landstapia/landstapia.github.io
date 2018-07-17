@@ -1,11 +1,13 @@
 [
   {
-    "itemName" : "Accountant IV",
-    "itemNo" : "FIN-SPV-001-2018",
-    "sg" : "SG25",
-    "summary" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vitae ipsum ac sapien maximus congue.",
+    "itemName" : "Supervising Administrative Officer",
+    "itemNo" : "488",
+    "agency" : "LGU - City of Calamba",
+    "assignment" : "City Budget Management Office",
+    "sg" : "SG22",
+    "summary" : "",
     "education" : [
-      "Bachelor's Degree relevant to the job"
+      "Bachelor's degree relevant to the job"
     ],
     "eligibility" : [ 
       {
@@ -14,7 +16,7 @@
       }
     ],
     "experience" : [
-      "At least 5 years relevant experience"
+      "3 years of relevant experience"
     ],
     "training" : [
       "16 hours of relevant training"
@@ -22,43 +24,24 @@
     "competencies" : [
       {
         "id" : "C1-2018",
-        "name" : "Integrity"
+        "name" : "Thinking Strategically and Creatively"
       },
       {
         "id" : "C2-2018",
-        "name" : "Customer and Service Orientedness"
+        "name" : "Leading Change"
+      },
+      {
+        "id" : "C3-2018",
+        "name" : "Building Collaborative, Inclusive Working Relationships"
+      },
+      {
+        "id" : "C4-2018",
+        "name" : "Managing Performance and Coaching for Results"
+      },
+      {
+        "id" : "C5-2018",
+        "name" : "Creating and Nurturing a High Performing Organization"
       }
     ]
   },
-  {
-    "itemName" : "Accountant III",
-    "itemNo" : "FIN-SPV-002-2018",
-    "sg" : "SG22",
-    "summary" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vitae ipsum ac sapien maximus congue.",
-    "education" : [
-      "Bachelor's Degree relevant to the job"
-    ],
-    "eligibility" : [ 
-      {
-        "id" : "cs-prof",
-        "name" : "CS Professional (2nd Level Eligibility)"
-      }
-    ],
-    "experience" : [
-      "At least 5 years relevant experience"
-    ],
-    "training" : [
-      "16 hours of relevant training"
-    ],
-    "competencies" : [
-      {
-        "id" : "C1-2018",
-        "name" : "Integrity"
-      },
-      {
-        "id" : "C2-2018",
-        "name" : "Customer and Service Orientedness"
-      }
-    ]
-  }
 ]
