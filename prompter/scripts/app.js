@@ -140,10 +140,10 @@ $(document).ready(function() {
         lyrics_array_parsed[i] = "<i>" + lyrics_array_parsed[i] + "</i>";
       }
       if(lyrics_array_parsed[i].match(/\(/g)) {
-        lyrics_array_parsed[i] = "<i style='font-size : 90%;'>" + lyrics_array_parsed[i];
+        lyrics_array_parsed[i] = "<a style='font-size : 90%; font-weight: normal;'>" + lyrics_array_parsed[i];
       }
       if(lyrics_array_parsed[i].match(/\)/g)) {
-        lyrics_array_parsed[i] = lyrics_array_parsed[i] + "</i>";
+        lyrics_array_parsed[i] = lyrics_array_parsed[i] + "</a>";
       }
     }
     document.getElementById('prompt-container').innerHTML = lyrics_array_parsed.join("<br>");
