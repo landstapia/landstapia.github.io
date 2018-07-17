@@ -33,7 +33,6 @@ $(document).ready(function() {
   }
 
   var CURR_COLOR = "COLOR_GRAD";
-  var CURR_FONT = "FONT_GRGA";
   var FPS = 16.67;
   var SPEED = 1;
 
@@ -44,23 +43,10 @@ $(document).ready(function() {
     CURR_COLOR = this.id;
   });
 
-  // Event handler when selecting font checkboxes
-  $("input[type=radio].font-checkbox").on('click', function () {
-    $("#prompt-container").removeClass(CURR_FONT);
-    $("#prompt-container").addClass(this.id);
-    CURR_FONT = this.id;
-  });
-
   // Event handler when ticking the language
   $("input[type=checkbox].lang-checkbox").on('click', function () {
     VISIBLE[this.name] = !VISIBLE[this.name];
     setLanguage();
-  });
-
-  // Event handler for text size
-  $("input[type=range]").on('input', function () {
-    var size = $(this).val() + "px";
-    $("#prompt-container").css({'fontSize': size});
   });
 
 
@@ -131,7 +117,8 @@ $(document).ready(function() {
         lyrics_array_parsed.push(formatted);
       }
       if(SELECTED_LANG > 0 && lyrics_array_input[i].match(REGEX["COMM"])) {
-        lyrics_array_parsed.push(lyrics_array_input[i].split(MARKUP["COMM"])[1]);
+        formatted = "<a class='TEXT_COMM'>" + lyrics_array_input[i].split(MARKUP["COMM"])[1] + "</a>";
+        lyrics_array_parsed.push(formatted);
       }
       
       if (lyrics_array_input[i] && lyrics_array_input[i].length < 2 ){
@@ -163,6 +150,10 @@ $(document).ready(function() {
     $("html").scrollTop(0);   
   }
 
+  var interval = null;
+  var isClosed = false;
+  var lastPressed = "";
+
   // Event handler when choosing file
   $("#lyrics-selector").on('change', function (event) {
     $.ajax({
@@ -192,10 +183,12 @@ $(document).ready(function() {
             
             $('.lang-checkbox').attr('disabled', 'true');
             $('.color-checkbox').attr('disabled', 'true');
-            $('.font-checkbox').attr('disabled', 'true');
 
             $("#prompt-container").append(elem);
-            $("html").scrollTop(0);  
+            $("html").scrollTop(0);
+
+            isClosed = !isClosed;
+            ($(document).find("#menu-container")).animate({ bottom: "-250px"}, 500);
           };
         }
         if (isTxt) {
@@ -204,11 +197,12 @@ $(document).ready(function() {
           
             $('.lang-checkbox').removeAttr('disabled');
             $('.color-checkbox').removeAttr('disabled');
-            $('.font-checkbox').removeAttr('disabled');
 
             LYRICS = reader.result;
             setLanguage();
-            document.getElementById("img-lyrics").remove();
+            $("img-lyrics").remove();
+            isClosed = !isClosed;
+            ($(document).find("#menu-container")).animate({ bottom: "-250px"}, 500);
           };
         }
       }
@@ -222,18 +216,58 @@ $(document).ready(function() {
     $("html").scrollTop($("html").scrollTop() - SPEED);
   }
 
-  var interval = null;
-  var isClosed = false;
   $(document).on('keydown', function (event) {
-    if (event.key === "ArrowDown" && interval == null)
-      interval = setInterval(down, FPS);
-    if (event.key === "ArrowUp" && interval == null) 
-      interval = setInterval(up, FPS);
+    if (event.key === "ArrowLeft" && lastPressed === "ArrowRight") {
+      clearInterval(interval);
+      interval = null;
+    }
+    if (event.key === "ArrowRight" && lastPressed === "ArrowLeft"){
+      clearInterval(interval);
+      interval = null;
+    } 
 
-    if (event.key === "F2") {
-      if (SPEED == 1) SPEED = 5;
-      else if (SPEED == 5) SPEED = 10;
-      else SPEED = 1;
+    if (event.key === "ArrowUp" && interval == null) {
+      interval = setInterval(up, FPS);
+      lastPressed = "ArrowUp";
+    } 
+    if (event.key === "ArrowDown" && interval == null) {
+      interval = setInterval(down, FPS);
+      lastPressed = "ArrowDown";
+    }
+    if (event.key === "ArrowLeft" && interval == null) {
+      interval = setInterval(up, FPS);
+      lastPressed = "ArrowLeft";
+    }
+    if (event.key === "ArrowRight" && interval == null) {
+      interval = setInterval(down, FPS);
+      lastPressed = "ArrowRight";
+    }
+  });
+
+  $(document).on('keydown', function (event) {
+    if (event.key === "1") {
+      SPEED = 1;
+    }
+    if (event.key === "2") {
+      SPEED = 3;
+    }
+    if (event.key === "3") {
+      SPEED = 5;
+    }
+    if (event.key === "4") {
+      SPEED = 10;
+    }
+    if (event.key === "5") {
+      SPEED = 20
+    }
+
+    if (event.key === "+") {
+      var size = parseInt($("#prompt-container").css('fontSize').split('px')[0]) + 5;
+      $("#prompt-container").css({'fontSize': size});
+    }
+    if (event.key === "-") {
+      var size = parseInt($("#prompt-container").css('fontSize').split('px')[0]) - 5;
+      $("#prompt-container").css({'fontSize': size});
     }
 
     if (event.key === "Home") 

@@ -11,18 +11,18 @@ $(document).ready(function() {
       lyrics[i] = lyrics[i].trim().split('\n').join("<br>");
     }
     LYRICS_ARRAY = lyrics;
-    $('#lyrics').hide().html(LYRICS_ARRAY[LYRICS_POS]).fadeIn('slow');
+    $('#lyrics').html(LYRICS_ARRAY[LYRICS_POS]);
   }
 
   var next = function () {
     if (LYRICS_POS < LYRICS_ARRAY.length)
       LYRICS_POS++;
-    $('#lyrics').hide().html(LYRICS_ARRAY[LYRICS_POS]).fadeIn(1000);
+    $('#lyrics').html(LYRICS_ARRAY[LYRICS_POS]);
   }
   var prev = function () {
     if (LYRICS_POS > 0)
       LYRICS_POS--;
-    $('#lyrics').hide().html(LYRICS_ARRAY[LYRICS_POS]).fadeIn('slow');
+    $('#lyrics').html(LYRICS_ARRAY[LYRICS_POS]);
   }
 
   $("#open_lyrics_file").on('change', function () {

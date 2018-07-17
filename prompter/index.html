@@ -8,7 +8,7 @@
   <script type="text/javascript" src="scripts/app.js"></script>
   <link rel="stylesheet" href="styles/materialize.min.css"></link>
   <link rel="stylesheet" href="styles/app.css"></link>
-  <link href="https://fonts.googleapis.com/css?family=EB+Garamond:400,400i,500,500i,600,600i,700,700i,800,800i" rel="stylesheet">
+  <!--link href="https://fonts.googleapis.com/css?family=EB+Garamond:400,400i,500,500i,600,600i,700,700i,800,800i" rel="stylesheet"-->
 </head>
 <body class="COLOR_GRAD">
   <div id="wrapper">
@@ -45,7 +45,7 @@
             <label class="teal-text" for="ENGL">English</label>
           </p>
         </div>
-        <div class="col s2">
+        <div class="col s3">
           <p class="bold">Background Image:</p>
           <p>
             <input type="radio" class="color-checkbox" name="color-checkbox" id="COLOR_GRAD" checked/>
@@ -72,22 +72,7 @@
             <label class="teal-text" for="COLOR_WHTE">White</label>
           </p>
         </div>
-        <div class="col s2">
-          <p class="bold">Font:</p>
-          <p>
-            <input type="radio" class="font-checkbox" name="font-checkbox" id="FONT_GRGA" checked/>
-            <label class="teal-text" for="FONT_GRGA">Default</label>
-          </p>
-          <p>
-            <input type="radio" class="font-checkbox" name="font-checkbox" id="FONT_ARIL"/>
-            <label class="teal-text" for="FONT_ARIL">Arial</label>
-          </p>
-          <p>
-            <input type="radio" class="font-checkbox" name="font-checkbox" id="FONT_GARA"/>
-            <label class="teal-text" for="FONT_GARA">Garamond</label>
-          </p>
-        </div>
-        <div class="col s5">
+        <div class="col s6">
           <p class="bold">File:</p>
           <div class="file-field input-field">
             <div class="btn">
@@ -98,15 +83,13 @@
               <input class="file-path" type="text">
             </div>
           </div>
-          <p class="bold">Size:</p>
-          <p class="range-field">
-            <input type="range" id="size" min="50" max="120" />
-          </p>
           <p><b>Usage: </b>Use the <b>Up</b> and <b>Down</b> arrow keys to scroll. Press <b>F2</b> to control scrolling speed.</p>
         </div>
       </div>
     </div>
-    <div id="prompt-container" class="FONT_GRGA"></div>
+    <div  class="FONT_GRGA">
+      <h1 id="prompt-container" class="FONT_GRGA" style="text-align: center; font-weight: 1000;"></h1>
+    </div>
   </div>
 </body>
 </html>

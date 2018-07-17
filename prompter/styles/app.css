@@ -17,19 +17,18 @@ body {
   font-weight: bold!important;
   font-style: normal!important;
 }
-.TEXT_TAGL {
-  color: black;
-}
 .TEXT_ENGL {
   color: darkmagenta;
+  text-shadow: 1px 0 darkmagenta;
 }
 .TEXT_PORT {
   color: blue;
+  text-shadow: 1px 0 blue;
 }
 .TEXT_SPAN {
   color: black;
   font-weight: normal;
-  font-style: italic;
+  font-style: normal;
 }
 .TEXT_BICL {
   color: orange;
@@ -45,13 +44,34 @@ body {
   background-image: url("../images/bg.jpg");
   background-size: 100%;
   background-color: none;
-  color: black;
 }
+.COLOR_GRAD .TEXT_TAGL,
+.COLOR_GRAD .TEXT_SPAN,
+.COLOR_GRAD .TEXT_COMM,
+.COLOR_BCHR .TEXT_TAGL,
+.COLOR_BCHR .TEXT_SPAN,
+.COLOR_BCHR .TEXT_COMM,
+.COLOR_GCHR .TEXT_TAGL,
+.COLOR_GCHR .TEXT_SPAN,
+.COLOR_GCHR .TEXT_COMM,
+.COLOR_RCHR .TEXT_TAGL,
+.COLOR_RCHR .TEXT_SPAN,
+.COLOR_RCHR .TEXT_COMM,
+.COLOR_WHTE .TEXT_TAGL,
+.COLOR_WHTE .TEXT_SPAN,
+.COLOR_WHTE .TEXT_COMM {
+  color: black!important;
+  text-shadow: 1px 0 black;
+}
+
 .COLOR_BCHR {
   background-image: url("../images/bg-blue.jpg");
   background-size: 100%;
   background-color: none;
   color: black;
+}
+.COLOR_BCHR .TEXT_TAGL,{
+
 }
 .COLOR_GCHR {
   background-image: url("../images/bg-green.jpg");
@@ -69,23 +89,26 @@ body {
   background-image: url("../images/bg-black.jpg");
   background-size: 100%;
   background-color: none;
-  color: white!important;
 }
+.COLOR_BLCK .TEXT_TAGL, 
+.COLOR_BLCK .TEXT_SPAN,
+.COLOR_BLCK .TEXT_COMM {
+  color: white!important;
+  text-shadow: 1px 0 white;
+}
+
 .COLOR_WHTE {
   background-image: url("../images/bg-white.jpg");
   background-size: 100%;
   background-color: none;
   color: black;
 }
+
 .FONT_GRGA {
-  font-family: Georgia!important;
-}
-.FONT_ARIL {
-  font-family: Arial, sans-serif!important;
-}
-.FONT_GARA {
-  font-family: 'EB Garamond', serif!important;
-  line-height: 105%!important;
+  font-family: Garamond!important;
+  font-stretch: 200%!important;
+  font-weight: 900!important;
+  letter-spacing:1px;
 }
 div#menu-container {
   color: black;
@@ -100,7 +123,6 @@ div#prompt-container {
   padding: 15% 3% 75% 3%;
   line-height: 130%;
   font-size: 85px;
-  font-weight: 800;
   text-align: center; 
   width: 100%;
   top: 0!important;
