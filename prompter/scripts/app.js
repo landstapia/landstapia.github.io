@@ -167,7 +167,7 @@ $(document).ready(function() {
         var reader = new FileReader();
         var extension = event.target.files[0].name.split('.').pop().toLowerCase();
 
-        var imageTypes = ["jpg", "jpeg"];
+        var imageTypes = ["jpg", "jpeg", "png"];
         var docTypes = ["txt"];
 
         var isImage = imageTypes.indexOf(extension) > -1;
