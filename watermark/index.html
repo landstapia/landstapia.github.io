@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>A simple clock</title>
+  <style type="text/css">
+    #output {
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      text-align: center;
+      text-shadow: 1px 1px 2px #aaa;
+    }
+  </style>
+</head>
+
+<body translate="no" >
+  <div id="output"></div>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js'></script>
+  <script>
+// https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+var urlParams;
+(function () {
+    var match,
+        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+        search = /([^&=]+)=?([^&]*)/g,
+        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+        query  = window.location.search.substring(1);
+
+    urlParams = {};
+    while (match = search.exec(query))
+       urlParams[decode(match[1])] = decode(match[2]);
+})();
+
+var output = document.getElementById("output");
+
+var c;
+setInterval(
+c = function() {
+    const today = moment();
+
+    const locale = "LECHERIA, LAGUNA WEST, LBMR";
+    const currentDate = today.format("MMMM DD, YYYY").toUpperCase();
+    const currentTime = today.format("h:mm a").toUpperCase();
+
+    const skTime = moment('6:50pm', "h:mma");
+    const tgTime = moment('4:50pm', "h:mma");
+    const wsTime = moment('2:00pm', "h:mma");
+
+    let service = "";
+
+
+    if (today.day() == 3 || today.day() == 4) {
+      service = "PRAYER MEETING";
+    }
+    if (today.day() == 4 && today.isAfter(skTime)) {
+      service = "SERBISYONG KAPATIRAN";
+    }
+    if (today.day() == 6) {
+      service = "WORSHIP SERVICE";
+    }
+    if (today.day() == 6 && today.isAfter(tgTime)) {
+      service = "THANKSGIVING OF GOD'S PEOPLE";
+    }
+    if (today.day() == 7) {
+      service = "THANKSGIVING OF GOD'S PEOPLE";
+    }
+    if (today.day() == 7 && today.isAfter()) {
+      service = "WORSHIP SERVICE"
+    }
+    output.innerText = `${locale}\n${service} | ${currentDate} | ${currentTime}`;
+}, 60000);
+c();
+
+  </script>
+</body>
+</html>
