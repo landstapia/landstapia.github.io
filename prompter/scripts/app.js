@@ -217,28 +217,28 @@ $(document).ready(function() {
   }
 
   $(document).on('keydown', function (event) {
-    if (event.key === "ArrowLeft" && lastPressed === "ArrowRight") {
+    if ((event.key === "ArrowLeft" || event.key === "9") && lastPressed === "ArrowRight") {
       clearInterval(interval);
       interval = null;
     }
-    if (event.key === "ArrowRight" && lastPressed === "ArrowLeft"){
+    if ((event.key === "ArrowRight" || event.key === "0") && lastPressed === "ArrowLeft"){
       clearInterval(interval);
       interval = null;
     } 
 
-    if (event.key === "ArrowUp" && interval == null) {
+    if ((event.key === "ArrowUp" || event.key === "7") && interval == null) {
       interval = setInterval(up, FPS);
       lastPressed = "ArrowUp";
     } 
-    if (event.key === "ArrowDown" && interval == null) {
+    if ((event.key === "ArrowDown" || event.key === "8") && interval == null) {
       interval = setInterval(down, FPS);
       lastPressed = "ArrowDown";
     }
-    if (event.key === "ArrowLeft" && interval == null) {
+    if ((event.key === "ArrowLeft" || event.key === "9") && interval == null) {
       interval = setInterval(up, FPS);
       lastPressed = "ArrowLeft";
     }
-    if (event.key === "ArrowRight" && interval == null) {
+    if ((event.key === "ArrowRight" || event.key === "0")  && interval == null) {
       interval = setInterval(down, FPS);
       lastPressed = "ArrowRight";
     }
@@ -290,7 +290,7 @@ $(document).ready(function() {
   });
 
   $(document).on('keyup', function (event) {
-    var events = ["ArrowDown", "ArrowUp"];
+    var events = ["ArrowDown", "ArrowUp", "7", "8"];
     if ((events.indexOf(event.key) !== -1) && interval != null) {
       clearInterval(interval);
       interval = null;
