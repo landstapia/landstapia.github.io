@@ -22,10 +22,9 @@ $(document).ready(function() {
       $('#lyrics').html(LYRICS_ARRAY[LYRICS_POS]);
 
       $('#lyrics').fadeIn();
-    });;
-    
-
+    });
   }
+
   var prev = function () {
     $('#lyrics').fadeOut().promise().done(function() {
       if (LYRICS_POS > 0)
@@ -33,10 +32,7 @@ $(document).ready(function() {
       $('#lyrics').html(LYRICS_ARRAY[LYRICS_POS]);
 
       $('#lyrics').fadeIn();
-    });;
-
-
-    $('#lyrics').fadeOut();
+    });
   }
 
   $("#open_lyrics_file").on('change', function (event) {
