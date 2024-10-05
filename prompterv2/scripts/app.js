@@ -15,25 +15,48 @@ $(document).ready(function() {
   }
 
   var next = function () {
-    if (LYRICS_POS < LYRICS_ARRAY.length)
-      LYRICS_POS++;
-    $('#lyrics').html(LYRICS_ARRAY[LYRICS_POS]);
+    
+    $('#lyrics').fadeOut().promise().done(function() {
+      if (LYRICS_POS < LYRICS_ARRAY.length)
+        LYRICS_POS++;
+      $('#lyrics').html(LYRICS_ARRAY[LYRICS_POS]);
+
+      $('#lyrics').fadeIn();
+    });;
+    
+
   }
   var prev = function () {
-    if (LYRICS_POS > 0)
-      LYRICS_POS--;
-    $('#lyrics').html(LYRICS_ARRAY[LYRICS_POS]);
+    $('#lyrics').fadeOut().promise().done(function() {
+      if (LYRICS_POS > 0)
+        LYRICS_POS--;
+      $('#lyrics').html(LYRICS_ARRAY[LYRICS_POS]);
+
+      $('#lyrics').fadeIn();
+    });;
+
+
+    $('#lyrics').fadeOut();
   }
 
-  $("#open_lyrics_file").on('change', function () {
+  $("#open_lyrics_file").on('change', function (event) {
+
+    console.log(event.target.files);
+
+    var reader = new FileReader();
+    var extension = event.target.files[0].name.split('.').pop().toLowerCase();
+    var docTypes = ["txt"];
+    var isTxt = docTypes.indexOf(extension) > -1;
+
     $.ajax({
-      url: '/prompterv2/' +  $(this).prop('files')[0].name,
+      url: './' +  $(this).prop('files')[0].name,
       type: 'GET',
       success: function(data){
         LYRICS = data;
         setLanguage();
       },
       error: function(data) {
+        console.log(data);
         var reader = new FileReader();
         var extension = event.target.files[0].name.split('.').pop().toLowerCase();
         var docTypes = ["txt"];

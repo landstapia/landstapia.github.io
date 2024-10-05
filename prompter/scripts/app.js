@@ -3,33 +3,35 @@ $(document).ready(function() {
 
   var LYRICS = "";
   var MARKUP = {
-    "TAGL" : "TAGL=>",
-    "ENGL" : "ENGL=>",
-    "PORT" : "PORT=>",
-    "SPAN" : "SPAN=>",
-    "CEBU" : "CEBU=>",
-    "KAPM" : "KAPM=>",
-    "BICL" : "BICL=>",
-    "COMM" : "COMM=>"
+    "FIL" : "FIL=>",
+    "ENG" : "ENG=>",
+    "POR" : "POR=>",
+    "SPA" : "SPA=>",
+    "CEB" : "CEB=>",
+    "PAM" : "PAM=>",
+    "BIC" : "BIC=>",
+    "SUB" : "SUB=>",
+    "COM" : "COM=>"
   }
   var REGEX = {
-    "TAGL" : new RegExp('^' + MARKUP["TAGL"], 'g'),
-    "ENGL" : new RegExp('^' + MARKUP["ENGL"], 'g'),
-    "PORT" : new RegExp('^' + MARKUP["PORT"], 'g'),
-    "SPAN" : new RegExp('^' + MARKUP["SPAN"], 'g'),
-    "CEBU" : new RegExp('^' + MARKUP["CEBU"], 'g'),
-    "KAPM" : new RegExp('^' + MARKUP["KAPM"], 'g'),
-    "BICL" : new RegExp('^' + MARKUP["BICL"], 'g'),
-    "COMM" : new RegExp('^' + MARKUP["COMM"], 'g')
+    "FIL" : new RegExp('^' + MARKUP["FIL"], 'g'),
+    "ENG" : new RegExp('^' + MARKUP["ENG"], 'g'),
+    "POR" : new RegExp('^' + MARKUP["POR"], 'g'),
+    "SPA" : new RegExp('^' + MARKUP["SPA"], 'g'),
+    "CEB" : new RegExp('^' + MARKUP["CEB"], 'g'),
+    "PAM" : new RegExp('^' + MARKUP["PAM"], 'g'),
+    "BIC" : new RegExp('^' + MARKUP["BIC"], 'g'),
+    "SUB" : new RegExp('^' + MARKUP["SUB"], 'g'),
+    "COM" : new RegExp('^' + MARKUP["COM"], 'g')
   }
   var VISIBLE = {
-    "TAGL" : true,
-    "ENGL" : false,
-    "PORT" : false,
-    "SPAN" : false,
-    "CEBU" : false,
-    "KAPM" : false,
-    "BICL" : false
+    "FIL" : true,
+    "ENG" : false,
+    "POR" : false,
+    "SPA" : false,
+    "CEB" : false,
+    "PAM" : false,
+    "BIC" : false
   }
 
   var CURR_COLOR = "COLOR_GRAD";
@@ -45,6 +47,12 @@ $(document).ready(function() {
 
   // Event handler when ticking the language
   $("input[type=checkbox].lang-checkbox").on('click', function () {
+    VISIBLE[this.name] = !VISIBLE[this.name];
+    setLanguage();
+  });
+
+    // Event handler when ticking the language
+  $("input[type=checkbox].mark-checkbox").on('click', function () {
     VISIBLE[this.name] = !VISIBLE[this.name];
     setLanguage();
   });
@@ -70,54 +78,58 @@ $(document).ready(function() {
     }
     for(var i = 0; i < lyrics_array_input.length; i++) {
       var formatted = '';
-      if(VISIBLE["TAGL"] && lyrics_array_input[i].match(REGEX["TAGL"])) {
-        formatted = "<a class='TEXT_TAGL'>" + lyrics_array_input[i].split(MARKUP["TAGL"])[1] + "</a>";
+      if(VISIBLE["FIL"] && lyrics_array_input[i].match(REGEX["FIL"])) {
+        formatted = "<span class='TEXT_FIL'>" + lyrics_array_input[i].split(MARKUP["FIL"])[1] + "</span>";
         lyrics_array_parsed.push(formatted);
       }
-      if(VISIBLE["ENGL"] && lyrics_array_input[i].match(REGEX["ENGL"])) {
-        formatted = "<a class='TEXT_ENGL";
+      if(VISIBLE["ENG"] && lyrics_array_input[i].match(REGEX["ENG"])) {
+        formatted = "<span class='TEXT_ENG";
         if(SELECTED_LANG === 1) 
           formatted += " TEXT_SOLO";
-        formatted += "'>" + lyrics_array_input[i].split(MARKUP["ENGL"])[1] + "</a>";
+        formatted += "'>" + lyrics_array_input[i].split(MARKUP["ENG"])[1] + "</span>";
         lyrics_array_parsed.push(formatted);
       }
-      if(VISIBLE["PORT"] && lyrics_array_input[i].match(REGEX["PORT"])) {
-        formatted = "<a class='TEXT_PORT";
+      if(VISIBLE["POR"] && lyrics_array_input[i].match(REGEX["POR"])) {
+        formatted = "<span class='TEXT_POR";
         if(SELECTED_LANG === 1) 
           formatted += " TEXT_SOLO"; 
-        formatted += "'>" + lyrics_array_input[i].split(MARKUP["PORT"])[1] + "</a>";
+        formatted += "'>" + lyrics_array_input[i].split(MARKUP["POR"])[1] + "</span>";
         lyrics_array_parsed.push(formatted);
       }
-      if(VISIBLE["SPAN"] && lyrics_array_input[i].match(REGEX["SPAN"])) {
-        formatted = "<a class='TEXT_SPAN";
+      if(VISIBLE["SPA"] && lyrics_array_input[i].match(REGEX["SPA"])) {
+        formatted = "<a class='TEXT_SPA";
         if(SELECTED_LANG === 1) 
           formatted += " TEXT_SOLO";
-        formatted += "'>" + lyrics_array_input[i].split(MARKUP["SPAN"])[1] + "</a>";
+        formatted += "'>" + lyrics_array_input[i].split(MARKUP["SPA"])[1] + "</a>";
         lyrics_array_parsed.push(formatted);
       }
-      if(VISIBLE["CEBU"] && lyrics_array_input[i].match(REGEX["CEBU"])) {
-        formatted = "<a class='TEXT_CEBU";
+      if(VISIBLE["CEB"] && lyrics_array_input[i].match(REGEX["CEB"])) {
+        formatted = "<a class='TEXT_CEB";
         if(SELECTED_LANG === 1) 
           formatted += " TEXT_SOLO";
-        formatted += "'>" + lyrics_array_input[i].split(MARKUP["CEBU"])[1] + "</a>";
+        formatted += "'>" + lyrics_array_input[i].split(MARKUP["CEB"])[1] + "</a>";
         lyrics_array_parsed.push(formatted);
       }
-      if(VISIBLE["KAPM"] && lyrics_array_input[i].match(REGEX["KAPM"])) {
-        formatted = "<a class='TEXT_KAPM";
+      if(VISIBLE["PAM"] && lyrics_array_input[i].match(REGEX["PAM"])) {
+        formatted = "<a class='TEXT_PAM";
         if(SELECTED_LANG === 1) 
           formatted += " TEXT_SOLO";
-        formatted += "'>" + lyrics_array_input[i].split(MARKUP["KAPM"])[1] + "</a>";
+        formatted += "'>" + lyrics_array_input[i].split(MARKUP["PAM"])[1] + "</a>";
         lyrics_array_parsed.push(formatted);
       }
-      if(VISIBLE["BICL"] && lyrics_array_input[i].match(REGEX["BICL"])) {
-        var formatted = "<a class='TEXT_BICL";
+      if(VISIBLE["BIC"] && lyrics_array_input[i].match(REGEX["BIC"])) {
+        var formatted = "<a class='TEXT_BIC";
         if(SELECTED_LANG === 1) 
           formatted += " TEXT_SOLO";
-        formatted += "'>" + lyrics_array_input[i].split(MARKUP["BICL"])[1] + "</a>";
+        formatted += "'>" + lyrics_array_input[i].split(MARKUP["BIC"])[1] + "</a>";
         lyrics_array_parsed.push(formatted);
       }
-      if(SELECTED_LANG > 0 && lyrics_array_input[i].match(REGEX["COMM"])) {
-        formatted = "<a class='TEXT_COMM'>" + lyrics_array_input[i].split(MARKUP["COMM"])[1] + "</a>";
+      if(SELECTED_LANG > 0 && lyrics_array_input[i].match(REGEX["SUB"])) {
+        formatted = "<a class='TEXT_SUB'>" + lyrics_array_input[i].split(MARKUP["SUB"])[1] + "</a>";
+        lyrics_array_parsed.push(formatted);
+      }
+      if(SELECTED_LANG > 0 && lyrics_array_input[i].match(REGEX["COM"])) {
+        formatted = "<a class='TEXT_COM'>" + lyrics_array_input[i].split(MARKUP["COM"])[1] + "</a>";
         lyrics_array_parsed.push(formatted);
       }
       
