@@ -5,15 +5,64 @@
   <title>Prompter</title>
   <script type="text/javascript" src="scripts/dependencies/jquery.min.js"></script> 
   <script type="text/javascript" src="scripts/app.js"></script>
-  <link rel="stylesheet" href="styles/materialize.min.css"></link>
   <link rel="stylesheet" href="styles/app.css"></link>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet">
+  
+  <style type="text/css">
+    .sriracha {
+      font-family: "Sriracha", cursive;
+      font-weight: 400;
+      font-style: normal;
+    }
+    .arial {
+      font-family: Arial;
+    }
+    html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+    body {
+      background: #ffffff;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      text-align: center;
+      width: 100%;
+    }
+    #wrapper {
+      background: blue;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh; /* Use viewport height for full screen */
+      width: 100vw;  /* Use full viewport width */
+      box-sizing: border-box;
+    }
+    #lyrics {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      color: white;
+      font-size: 56px;
+      font-weight: bold;
+      line-height: 56px;
+      text-shadow: 1px 1px 6px #000!important;
+      height: 200px;
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
   <div id="wrapper">
-    <style>
-      
-    </style>
-    <div id="lyrics"></div>
+    <div id="lyrics" class="sriracha">
+
+    </div>
   </div>
   <input type='file' id="open_lyrics_file"/>
 </body>

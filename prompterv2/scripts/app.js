@@ -7,10 +7,38 @@ $(document).ready(function() {
     var lyrics = LYRICS.split('=');
     LYRICS_POS = 0;
 
-    for (var i = 0; i < lyrics.length; i++) {
-      lyrics[i] = lyrics[i].trim().split('\n').join("<br>");
+    for (let i = 0; i < lyrics.length; i++) {
+      lyrics[i] = lyrics[i].trim().split('\n');//.join("<br>");
+
+      for (let j = 0; j < lyrics[i].length; j++) {
+        if (lyrics[i][j].includes('[Title]')) {
+          let lyric = lyrics[i][j].replace('[Title]','');
+          lyrics[i][j] = `<span style="font-size: 80px;">${lyric.trim()}</span>`;
+        }
+        else if (lyrics[i][j].includes('[Subtitle]')) {
+          let lyric = lyrics[i][j].replace('[Subtitle]','');
+          lyrics[i][j] = `<span style="font-size: 36px; line-height: 24px!important;">${lyric.trim()}</span>`;
+        }
+        else {
+          lyrics[i][j] = `<span style="font-size: 48px;">${lyrics[i][j]}</span>`;
+        }
+      }
+
+      lyrics[i] = `<p>${lyrics[i].join('<br>')}</p>`;
+
+
+      // console.log(lyrics[i]);
+      // if (lyrics[i].startsWith('[Title]')) {
+      //   let lyric = lyrics[i].replace('[Title]','');
+      //   lyrics[i] = `<span style="font-size: 80px">${lyric.trim()}</span>`;
+      // }
+      // else if (lyrics[i].includes('[Subtitle]')) {
+      //   lyrics[i] = lyrics[i].replace('[Subtitle]','<span style="font-size: 36px">');
+      //   lyrics[i] = lyrics[i].replace('[/Subtitle]','</span>');
+      // }
     }
     LYRICS_ARRAY = lyrics;
+    console.log(LYRICS_ARRAY)
     $('#lyrics').html(LYRICS_ARRAY[LYRICS_POS]);
   }
 
