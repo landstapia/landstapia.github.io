@@ -106,8 +106,10 @@ $(document).ready(function() {
       prev();
     if (event.key == "Escape")
       $("#open_lyrics_file").click();
-    if (event.key == " ")
-      $("#lyrics").toggle('slow');
+    if (event.key == " "){
+      console.log('meow');
+      $("#lyrics").fadeToggle('slow');
+    }
   });
 
   $(document).on('keyup', function (event) {
