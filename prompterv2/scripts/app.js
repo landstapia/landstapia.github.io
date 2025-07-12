@@ -105,7 +105,7 @@ $(document).ready(function() {
     if (event.key === "ArrowUp" && interval == null) 
       prev();
     if (event.key == "Escape")
-      $("#open_lyrics_file").click();
+      $("#settings").fadeToggle();
     if (event.key == " "){
       console.log('meow');
       $("#lyrics").fadeToggle('slow');
@@ -120,5 +120,12 @@ $(document).ready(function() {
     } 
   });
 
+
+  $('#select-bg-color').on('change', function () {
+    $('#wrapper').css('background', $(this).val());
+  });
+  $('#text-color').on('change', function () {
+    $('#lyrics').css('color', $(this).val());
+  });
 });
 

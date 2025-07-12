@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-theme="dark">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <title>Prompter</title>
@@ -9,7 +9,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet">
-  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+
   <style type="text/css">
     .sriracha {
       font-family: "Sriracha", cursive;
@@ -24,6 +26,7 @@
       margin: 0;
       padding: 0;
       width: 100%;
+      overflow: hidden;
     }
     body {
       background: #ffffff;
@@ -34,19 +37,20 @@
       width: 100%;
     }
     #wrapper {
-      background: blue;  /* Changed to blue */
+      background: red;
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100vh;
       width: 100vw;
       box-sizing: border-box;
+      overflow: hidden;
     }
     #lyrics {
       display: flex;
       justify-content: center;
       align-items: center;
-      color: black;  /* Changed to black */
+      color: white;
       font-size: 56px;
       font-weight: bold;
       line-height: 60px;
@@ -63,13 +67,85 @@
       opacity: 0;
       transition: all 0.25s;
     }
+    #settings {
+      box-shadow: 0px 0px 15px #000!important;
+      border-top: 3px solid white;
+      padding: 20px;
+      margin: 0;
+      width: 100%;
+      height: 250px;
+      position: fixed;
+      bottom: 0;
+      background: #000000;
+      background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(36, 57, 64, 1) 51%, rgba(77, 64, 0, 1) 100%);
+      z-index: 99;
+    }
+    .column {
+      text-align: left;
+    }
   </style>
+
+
 </head>
 <body>
   <div id="wrapper">
     <div id="lyrics" class="sriracha">
     </div>
   </div>
-  <input type='file' id="open_lyrics_file"/>
+  <div id="settings" class="columns">
+    <div class="field column is-2">
+      <label class="label"> Font Color: </label>
+      <div class="control has-icons-left">
+        <div class="select bg-color">
+          <select name="bg-color" id="select-bg-color">
+            <option value="#ff0000">Red</option>
+            <option value="#0000ff">Blue</option>
+            <option value="#00ff00">Green</option>
+            <option value="#000000">Black</option>
+          </select>
+           <span class="icon is-left">
+            <i class="fas fa-fill"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="field column is-2">
+      <label class="label"> Font Color: </label>
+      <div class="control has-icons-left">
+        <div class="select text-color">
+          <select name="text-color" id="text-color">
+            <option value="#ffffff">White</option>
+            <option value="#000000">Black</option>
+          </select>
+           <span class="icon is-left">
+            <i class="fas fa-droplet"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="field column is-3" >
+      <label class="label"> Lyrics File: </label>
+      <div class="file">
+        <label class="file-label">
+          <input class="file-input" type='file' id="open_lyrics_file"/>
+          <span class="file-cta">
+          <span class="file-icon">
+            <i class="fas fa-upload"></i>
+          </span>
+          <span class="file-label"> Choose Lyrics File...</span>
+        </label>
+      </div>
+    </div>
+    <div class="field column is-3">
+      <label class="label"> Mark-up Guide:</label>
+      <p><span class="tag is-white">[Title]</span> for titles </p>
+      <p><span class="tag is-white">[Subtitle]</span> for subtitles or alternate lyrics</p>
+      <p><span class="tag is-white">=</span> to separate lines</p> 
+    </div>
+    <div class="field column is-2">
+      <label class="label"> Controls: </label>
+      <span class="tag is-white">Esc</span> to hide this bar.
+    </div>
+  </div>
 </body>
 </html>
