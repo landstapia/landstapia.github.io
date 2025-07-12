@@ -6,7 +6,6 @@
   <script type="text/javascript" src="scripts/dependencies/jquery.min.js"></script> 
   <script type="text/javascript" src="scripts/app.js"></script>
   <link rel="stylesheet" href="styles/app.css"></link>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet">
@@ -35,20 +34,19 @@
       width: 100%;
     }
     #wrapper {
-      background: black;
+      background: blue;  /* Changed to blue */
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh; /* Use viewport height for full screen */
-      width: 100vw;  /* Use full viewport width */
+      height: 100vh;
+      width: 100vw;
       box-sizing: border-box;
     }
     #lyrics {
       display: flex;
       justify-content: center;
       align-items: center;
-
-      color: white;
+      color: black;  /* Changed to black */
       font-size: 56px;
       font-weight: bold;
       line-height: 60px;
@@ -70,7 +68,6 @@
 <body>
   <div id="wrapper">
     <div id="lyrics" class="sriracha">
-
     </div>
   </div>
   <input type='file' id="open_lyrics_file"/>
