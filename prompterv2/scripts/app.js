@@ -20,7 +20,7 @@ $(document).ready(function() {
           lyrics[i][j] = `<span style="font-size: 36px; line-height: 24px!important;">${lyric.trim()}</span>`;
         }
         else {
-          lyrics[i][j] = `<span style="font-size: 48px;">${lyrics[i][j]}</span>`;
+          lyrics[i][j] = `<span style="font-size: 48px; ">${lyrics[i][j]}</span>`;
         }
       }
 

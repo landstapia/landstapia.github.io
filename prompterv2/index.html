@@ -1,3 +1,82 @@
+<!-- <!DOCTYPE html> -->
+<!-- <html> -->
+<!-- <head> -->
+  <!-- <meta http-equiv="content-type" content="text/html; charset=utf-8" /> -->
+  <!-- <title>Prompter</title> -->
+  <!-- <script type="text/javascript" src="scripts/dependencies/jquery.min.js"></script>  -->
+  <!-- <script type="text/javascript" src="scripts/app.js"></script> -->
+  <!-- <link rel="stylesheet" href="styles/app.css"></link> -->
+
+  <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
+  <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet"> -->
+  
+  <!-- <style type="text/css"> -->
+    <!-- .sriracha { -->
+      <!-- font-family: "Sriracha", cursive; -->
+      <!-- font-weight: 400; -->
+    <!--   font-style: normal;
+    }
+    .arial {
+      font-family: Arial;
+    }
+    html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+    body {
+      background: #ffffff;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      text-align: center;
+      width: 100%;
+    }
+    #wrapper {
+      background: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh; /* Use viewport height for full screen */
+      width: 100vw;  /* Use full viewport width */
+      box-sizing: border-box;
+    }
+    #lyrics {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      color: white;
+      font-size: 56px;
+      font-weight: bold;
+      line-height: 60px;
+      text-shadow: 1px 1px 10px #000!important;
+      height: 200px;
+      width: 100%;
+    }
+    .on {
+      opacity: 1;
+      color: red;
+      transition: all 2s;
+    } 
+    .off{
+      opacity: 0;
+      transition: all 0.25s;
+    }
+  </style>
+</head>
+<body>
+  <div id="wrapper">
+    <div id="lyrics" class="sriracha">
+
+    </div>
+  </div>
+  <input type='file' id="open_lyrics_file"/>
+</body>
+</html> -->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,7 +85,6 @@
   <script type="text/javascript" src="scripts/dependencies/jquery.min.js"></script> 
   <script type="text/javascript" src="scripts/app.js"></script>
   <link rel="stylesheet" href="styles/app.css"></link>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet">
@@ -35,42 +113,41 @@
       width: 100%;
     }
     #wrapper {
-      background: blue;
+      background: black;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh; /* Use viewport height for full screen */
-      width: 100vw;  /* Use full viewport width */
+      height: 100vh;
+      width: 100vw;
       box-sizing: border-box;
     }
     #lyrics {
       display: flex;
       justify-content: center;
       align-items: center;
-
-      color: black;
+      color: white;
       font-size: 56px;
       font-weight: bold;
-      line-height: 56px;
-      text-shadow: 1px 1px 6px #000!important;
+      line-height: 60px;
+      text-shadow: 1px 1px 10px #000!important;
       height: 200px;
       width: 100%;
     }
     .on {
       opacity: 1;
       color: red;
-      transition: all 2s;
+      /* Changed to ramp-up effect */
+      transition: opacity 3s ease-in, color 3s ease-in;
     } 
     .off{
       opacity: 0;
-      transition: all 0.25s;
+      transition: opacity 0.25s ease-out;
     }
   </style>
 </head>
 <body>
   <div id="wrapper">
     <div id="lyrics" class="sriracha">
-
     </div>
   </div>
   <input type='file' id="open_lyrics_file"/>
