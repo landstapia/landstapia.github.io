@@ -1,1 +1,72 @@
-
+.sriracha {
+  font-family: "Sriracha", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+.arial {
+  font-family: Arial;
+  font-weight: 400;
+  font-style: normal;
+}
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
+}
+body {
+  background: #ffffff;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  text-align: center;
+  width: 100%;
+}
+#wrapper {
+  background: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+#lyrics {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 56px;
+  font-weight: bold;
+  line-height: 60px;
+  text-shadow: 1px 1px 10px #000!important;
+  height: 200px;
+  width: 100%;
+}
+.on {
+  opacity: 1;
+  color: red;
+  transition: all 2s;
+} 
+.off{
+  opacity: 0;
+  transition: all 0.25s;
+}
+#settings {
+  box-shadow: 0px 0px 15px #000!important;
+  border-top: 3px solid white;
+  padding: 20px;
+  margin: 0;
+  width: 100%;
+  height: 250px;
+  position: fixed;
+  bottom: 0;
+  background: #000000;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(36, 57, 64, 1) 51%, rgba(77, 64, 0, 1) 100%);
+  z-index: 99;
+}
+.column {
+  text-align: left;
+}

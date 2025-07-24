@@ -127,5 +127,8 @@ $(document).ready(function() {
   $('#text-color').on('change', function () {
     $('#lyrics').css('color', $(this).val());
   });
+  $('#select-font').on('change', function () {
+    $('#lyrics').css('font', $(this).val());
+  });
 });
 
