@@ -86,7 +86,7 @@ $(document).ready(function() {
         $el.removeClass("off").addClass("on");
       }
     });
-    
+
   }
 
   var prev = function () {
@@ -122,6 +122,28 @@ $(document).ready(function() {
       }
     });
   }
+
+  var hide = function () {
+    let $el = $('#lyrics');
+
+    // Step 1: fade out while staying zoomed in
+    $el.removeClass("on").addClass("fade");
+
+    // Step 2: after fade finishes
+    $el.off("transitionend").one("transitionend", function(e) {
+      if (e.originalEvent.propertyName === "opacity") {
+        // Snap scale back to normal while invisible
+        $el.removeClass("fade").addClass("off");
+      }
+    });
+  };
+
+  var show = function () {
+    let $el = $('#lyrics');
+
+    // Step 1: go directly from hidden to zoomed in + fade in
+    $el.removeClass("off fade").addClass("on");
+  };
 
   $("#open_lyrics_file").on('change', function (event) {
 
@@ -167,8 +189,16 @@ $(document).ready(function() {
     if (event.key == "Escape")
       $("#settings").fadeToggle();
     if (event.key == " "){
-      console.log('meow');
-      $("#lyrics").fadeToggle('slow');
+      if (isClosed) {
+        console.log(isClosed);
+        show();
+        isClosed = false;
+      }
+      else {
+        console.log(isClosed);
+        hide();
+        isClosed = true;
+      }
     }
   });
 
