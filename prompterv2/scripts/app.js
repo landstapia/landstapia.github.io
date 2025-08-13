@@ -26,31 +26,11 @@ $(document).ready(function() {
 
       lyrics[i] = `<p>${lyrics[i].join('<br>')}</p>`;
 
-      // console.log(lyrics[i]);
-      // if (lyrics[i].startsWith('[Title]')) {
-      //   let lyric = lyrics[i].replace('[Title]','');
-      //   lyrics[i] = `<span style="font-size: 80px">${lyric.trim()}</span>`;
-      // else if (lyrics[i].includes('[Subtitle]')) {
-      //   lyrics[i] = lyrics[i].replace('[Subtitle]','<span style="font-size: 36px">');
-      //   lyrics[i] = lyrics[i].replace('[/Subtitle]','</span>');
-      // }
-      // }
     }
 
     LYRICS_ARRAY = lyrics;
     console.log(LYRICS_ARRAY)
     $('#lyrics').html(LYRICS_ARRAY[LYRICS_POS]);
-  }
-
-
-  function zoomIn($el) {
-    $el.removeClass("off").addClass("on");
-  }
-
-  function zoomOut($el) {
-    $el.removeClass("on");  // step 1: remove zoom-in
-    void $el[0].offsetWidth; // step 2: force reflow
-    $el.addClass("off");     // step 3: add zoom-out
   }
 
   var next = function () {
