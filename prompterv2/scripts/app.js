@@ -147,8 +147,6 @@ $(document).ready(function() {
 
   $("#open_lyrics_file").on('change', function (event) {
 
-    console.log(event.target.files);
-
     var reader = new FileReader();
     var extension = event.target.files[0].name.split('.').pop().toLowerCase();
     var docTypes = ["txt"];
@@ -190,12 +188,10 @@ $(document).ready(function() {
       $("#settings").fadeToggle();
     if (event.key == " "){
       if (isClosed) {
-        console.log(isClosed);
         show();
         isClosed = false;
       }
       else {
-        console.log(isClosed);
         hide();
         isClosed = true;
       }
