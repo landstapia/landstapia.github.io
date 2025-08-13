@@ -1,11 +1,65 @@
+.arial {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold!important;
+  font-style: normal;
+}
+.atma {
+  font-family: "Atma", system-ui;
+  font-weight: 600;
+  font-style: normal;
+}
+.birthstone {
+  font-family: "Birthstone", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+.cookie {
+  font-family: "Cookie", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+.englebert {
+  font-family: "Englebert", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+.ms-madi {
+  font-family: "Ms Madi", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+.pattaya {
+  font-family: "Pattaya", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.rouge-script {
+  font-family: "Rouge Script", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
 .sriracha {
   font-family: "Sriracha", cursive;
   font-weight: 400;
   font-style: normal;
 }
-.arial {
-  font-family: Arial;
+
+.title-text {
+  color: white!important;
+  font-size: 80px!important;
+  line-height: 90px!important;
 }
+.subtitle-text {
+  color: white!important;
+  font-size: 40px!important;
+  line-height: 60px!important;
+}
+.normal-text {
+  color: white!important;
+  font-size: 60px!important;
+  line-height: 70px!important;
+}
+
 html {
   height: 100%;
   margin: 0;
@@ -36,22 +90,30 @@ body {
   justify-content: center;
   align-items: center;
   color: white;
-  font-size: 56px;
-  font-weight: bold;
-  line-height: 60px;
-  text-shadow: 1px 1px 10px #000!important;
+  text-shadow:     
+    1px 1px 15px rgba(0,0,0,1), 
+    -1px -1px 15px rgba(0,0,0,1), 
+    1px -1px 15px rgba(0,0,0,1), 
+    -1px 1px 15px rgba(0,0,0,1);
   height: 200px;
   width: 100%;
 }
 .on {
   opacity: 1;
-  color: red;
-  transition: all 2s;
-} 
-.off{
-  opacity: 0;
-  transition: all 0.25s;
+  transform: scale(1);
+  transition: opacity 1s, transform 1s;
 }
+.fade {
+  opacity: 0;
+  transform: scale(1);
+  transition: opacity 0.25s;
+}
+.off {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: none
+}
+
 #settings {
   box-shadow: 0px 0px 15px #000!important;
   border-top: 3px solid white;

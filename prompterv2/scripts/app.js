@@ -13,14 +13,14 @@ $(document).ready(function() {
       for (let j = 0; j < lyrics[i].length; j++) {
         if (lyrics[i][j].includes('[Title]')) {
           let lyric = lyrics[i][j].replace('[Title]','');
-          lyrics[i][j] = `<span style="font-size: 80px;">${lyric.trim()}</span>`;
+          lyrics[i][j] = `<span class="title-text">${lyric.trim()}</span>`;
         }
         else if (lyrics[i][j].includes('[Subtitle]')) {
           let lyric = lyrics[i][j].replace('[Subtitle]','');
-          lyrics[i][j] = `<span style="font-size: 36px; line-height: 24px!important;">${lyric.trim()}</span>`;
+          lyrics[i][j] = `<span class="subtitle-text">${lyric.trim()}</span>`;
         }
         else {
-          lyrics[i][j] = `<span style="font-size: 48px; ">${lyrics[i][j]}</span>`;
+          lyrics[i][j] = `<span class="normal-text">${lyrics[i][j]}</span>`;
         }
       }
 
@@ -42,24 +42,84 @@ $(document).ready(function() {
     $('#lyrics').html(LYRICS_ARRAY[LYRICS_POS]);
   }
 
+
+  function zoomIn($el) {
+    $el.removeClass("off").addClass("on");
+  }
+
+  function zoomOut($el) {
+    $el.removeClass("on");  // step 1: remove zoom-in
+    void $el[0].offsetWidth; // step 2: force reflow
+    $el.addClass("off");     // step 3: add zoom-out
+  }
+
   var next = function () {
     
-    $('#lyrics').fadeOut().promise().done(function() {
-      if (LYRICS_POS < LYRICS_ARRAY.length)
-        LYRICS_POS++;
-      $('#lyrics').html(LYRICS_ARRAY[LYRICS_POS]);
+    // $('#lyrics').fadeOut().promise().done(function() {
+    //   if (LYRICS_POS < LYRICS_ARRAY.length)
+    //     LYRICS_POS++;
+    //   $('#lyrics').html(LYRICS_ARRAY[LYRICS_POS]);
 
-      $('#lyrics').fadeIn();
+    //   $('#lyrics').fadeIn();
+    // });
+
+    let $el = $('#lyrics');
+
+    // Step 1: fade out while staying zoomed in
+    $el.removeClass("on").addClass("fade");
+
+    // Step 2: after fade finishes
+    $el.one("transitionend", function(e) {
+      if (e.originalEvent.propertyName === "opacity") {
+
+        // Snap scale back to normal while invisible
+        $el.removeClass("fade").addClass("off");
+
+        // Change the position of the lyrics
+        if (LYRICS_POS < LYRICS_ARRAY.length) LYRICS_POS++;
+        $el.html(LYRICS_ARRAY[LYRICS_POS]);
+
+        // Force reflow so browser registers the scale reset
+        void $el[0].offsetWidth;
+
+        // Step 3: fade in again
+        $el.removeClass("off").addClass("on");
+      }
     });
+    
   }
 
   var prev = function () {
-    $('#lyrics').fadeOut().promise().done(function() {
-      if (LYRICS_POS > 0)
-        LYRICS_POS--;
-      $('#lyrics').html(LYRICS_ARRAY[LYRICS_POS]);
+    // $('#lyrics').fadeOut().promise().done(function() {
+    //   if (LYRICS_POS > 0)
+    //     LYRICS_POS--;
+    //   $('#lyrics').html(LYRICS_ARRAY[LYRICS_POS]);
 
-      $('#lyrics').fadeIn();
+    //   $('#lyrics').fadeIn();
+    // });
+
+    let $el = $('#lyrics');
+
+    // Step 1: fade out while staying zoomed in
+    $el.removeClass("on").addClass("fade");
+
+    // Step 2: after fade finishes
+    $el.one("transitionend", function(e) {
+      if (e.originalEvent.propertyName === "opacity") {
+
+        // Snap scale back to normal while invisible
+        $el.removeClass("fade").addClass("off");
+
+        // Change the position of the lyrics
+        if (LYRICS_POS < LYRICS_ARRAY.length) LYRICS_POS--;
+        $el.html(LYRICS_ARRAY[LYRICS_POS]);
+
+        // Force reflow so browser registers the scale reset
+        void $el[0].offsetWidth;
+
+        // Step 3: fade in again
+        $el.removeClass("off").addClass("on");
+      }
     });
   }
 
@@ -120,6 +180,7 @@ $(document).ready(function() {
     } 
   });
 
+  let font = 'arial';
 
   $('#select-bg-color').on('change', function () {
     $('#wrapper').css('background', $(this).val());
@@ -127,8 +188,10 @@ $(document).ready(function() {
   $('#text-color').on('change', function () {
     $('#lyrics').css('color', $(this).val());
   });
-  $('#select-font').on('change', function () {
-    $('#lyrics').css('font', $(this).val());
+  $('#text-font').on('change', function () {
+    $('#lyrics').removeClass(font);
+    font = $(this).val();
+    $('#lyrics').addClass(font);
   });
 });
 
