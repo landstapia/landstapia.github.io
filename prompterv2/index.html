@@ -16,17 +16,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Ms+Madi&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Pattaya&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Rouge+Script&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Story+Script&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
 </head>
 <body>
   <div id="wrapper">
-    <div id="lyrics" class="arial">
-    </div>
+    <div id="lyrics" class="arial"></div>
+    <div id="lyrics-sub" class="arial"></div>
   </div>
   <div id="settings" class="columns">
-    <div class="field column is-2">
-      <label class="label"> Font Color: </label>
+    <div class="field column is-2.20">
+      <label class="label"> Background Color: </label>
       <div class="control has-icons-left">
         <div class="select bg-color">
           <select name="bg-color" id="select-bg-color">
@@ -69,6 +70,7 @@
             <option value="pattaya" class="pattaya">Pattaya</option>
             <option value="rouge-script" class="rouge-script">Rouge Script</option>
             <option value="sriracha" class="sriracha">Sriracha</option>
+            <option value="story-script" class="story-script">Story Script</option>
           </select>
            <span class="icon is-left">
             <i class="fas fa-font"></i>
@@ -76,7 +78,7 @@
         </div>
       </div>
     </div>
-    <div class="field column is-3" >
+    <div class="field column is-2.25" >
       <label class="label"> Lyrics File: </label>
       <div class="file">
         <label class="file-label">
@@ -89,7 +91,7 @@
         </label>
       </div>
     </div>
-    <div class="field column is-3">
+    <div class="field column is-2">
       <label class="label"> Mark-up Guide:</label>
       <p><span class="tag is-white">[Title]</span> for titles </p>
       <p><span class="tag is-white">[Subtitle]</span> for subtitles or alternate lyrics</p>

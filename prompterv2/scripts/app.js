@@ -1,16 +1,21 @@
 $(document).ready(function() {
   var LYRICS = "";
   var LYRICS_ARRAY = [];
+  var LYRICS_ARRAY_2 = [];
   var LYRICS_POS = 0;
 
   var setLanguage = function () {
-    var lyrics = LYRICS.split('=');
+    let lyrics = LYRICS.split('=');
+    
     LYRICS_POS = 0;
 
     for (let i = 0; i < lyrics.length; i++) {
       lyrics[i] = lyrics[i].trim().split('\n');//.join("<br>");
 
       for (let j = 0; j < lyrics[i].length; j++) {
+
+        lyrics[i][j] = lyrics[i][j].replace(' | ','<br>');
+
         if (lyrics[i][j].includes('[Title]')) {
           let lyric = lyrics[i][j].replace('[Title]','');
           lyrics[i][j] = `<span class="title-text">${lyric.trim()}</span>`;
@@ -29,8 +34,40 @@ $(document).ready(function() {
     }
 
     LYRICS_ARRAY = lyrics;
-    console.log(LYRICS_ARRAY)
+    
+    lyrics = LYRICS.split('=');
+
+    for (let i = 0; i < lyrics.length; i++) {
+      lyrics[i] = lyrics[i].trim().split('\n');//.join("<br>");
+
+      for (let j = 0; j < lyrics[i].length; j++) {
+        
+        lyrics[i][j] = lyrics[i][j].replace(' | ',' ');
+
+        if (lyrics[i][j].includes('[Title]')) {
+          let lyric = lyrics[i][j].replace('[Title]','');
+          lyrics[i][j] = `<span class="title-text">${lyric.trim()}</span>`;
+        }
+        else if (lyrics[i][j].includes('[Subtitle]')) {
+          let lyric = lyrics[i][j].replace('[Subtitle]','');
+          lyrics[i][j] = `<span class="subtitle-text">${lyric.trim()}</span>`;
+        }
+        else {
+          lyrics[i][j] = `<span class="normal-text">${lyrics[i][j]}</span>`;
+        }
+      }
+
+      lyrics[i] = `<p>${lyrics[i].join('<br>')}</p>`;
+
+    }
+
+    LYRICS_ARRAY_2 = lyrics;
+
+    console.log(LYRICS_ARRAY);
+    console.log(LYRICS_ARRAY_2);
+
     $('#lyrics').html(LYRICS_ARRAY[LYRICS_POS]);
+    $('#lyrics-sub').html(LYRICS_ARRAY_2[LYRICS_POS]);
   }
 
   var next = function () {
@@ -44,26 +81,31 @@ $(document).ready(function() {
     // });
 
     let $el = $('#lyrics');
+    let $el2 = $('#lyrics-sub');
 
     // Step 1: fade out while staying zoomed in
-    $el.removeClass("on").addClass("fade");
+    $el.removeClass("scale-on").addClass("fade");
+    $el2.removeClass("on").addClass("fade");
 
     // Step 2: after fade finishes
     $el.one("transitionend", function(e) {
       if (e.originalEvent.propertyName === "opacity") {
 
         // Snap scale back to normal while invisible
-        $el.removeClass("fade").addClass("off");
+        $el.removeClass("fade").addClass("scale-off");
+        $el2.removeClass("fade").addClass("off");
 
         // Change the position of the lyrics
         if (LYRICS_POS < LYRICS_ARRAY.length) LYRICS_POS++;
         $el.html(LYRICS_ARRAY[LYRICS_POS]);
+        $el2.html(LYRICS_ARRAY_2[LYRICS_POS]);
 
         // Force reflow so browser registers the scale reset
         void $el[0].offsetWidth;
 
         // Step 3: fade in again
-        $el.removeClass("off").addClass("on");
+        $el.removeClass("scale-off").addClass("scale-on");
+        $el2.removeClass("off").addClass("on");
       }
     });
 
@@ -79,26 +121,31 @@ $(document).ready(function() {
     // });
 
     let $el = $('#lyrics');
+    let $el2 = $('#lyrics-sub');
 
     // Step 1: fade out while staying zoomed in
-    $el.removeClass("on").addClass("fade");
+    $el.removeClass("scale-on").addClass("fade");
+    $el2.removeClass("on").addClass("fade");
 
     // Step 2: after fade finishes
     $el.one("transitionend", function(e) {
       if (e.originalEvent.propertyName === "opacity") {
 
         // Snap scale back to normal while invisible
-        $el.removeClass("fade").addClass("off");
+        $el.removeClass("fade").addClass("scale-off");
+        $el2.removeClass("fade").addClass("off");
 
         // Change the position of the lyrics
         if (LYRICS_POS < LYRICS_ARRAY.length) LYRICS_POS--;
         $el.html(LYRICS_ARRAY[LYRICS_POS]);
+        $el2.html(LYRICS_ARRAY_2[LYRICS_POS]);
 
         // Force reflow so browser registers the scale reset
         void $el[0].offsetWidth;
 
         // Step 3: fade in again
-        $el.removeClass("off").addClass("on");
+        $el.removeClass("scale-off").addClass("scale-on");
+        $el2.removeClass("off").addClass("on");
       }
     });
   }
