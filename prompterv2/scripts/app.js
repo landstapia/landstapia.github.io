@@ -248,6 +248,7 @@ $(document).ready(function() {
   });
 
   let font = 'arial';
+  let zoom = 1;
 
   $('#select-bg-color').on('change', function () {
     $('#wrapper').css('background', $(this).val());
@@ -259,6 +260,16 @@ $(document).ready(function() {
     $('#lyrics').removeClass(font);
     font = $(this).val();
     $('#lyrics').addClass(font);
+  });
+  $('#zoom-up').on('click', function () {
+    zoom = zoom + .25;
+    $('#lyrics').css('zoom', zoom);
+    $('#lyrics-sub').css('zoom', zoom);
+  });
+  $('#zoom-down').on('click', function () {
+    zoom = zoom - .25;
+    $('#lyrics').css('zoom', zoom);
+    $('#lyrics-sub').css('zoom', zoom);
   });
 });
 

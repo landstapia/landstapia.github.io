@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="styles/app.css"></link>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+
   <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Atma:wght@600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Birthstone&display=swap" rel="stylesheet">
@@ -21,8 +24,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Emilys+Candy&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;1,800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+
 </head>
 <body>
   <div id="wrapper">
@@ -30,11 +32,12 @@
     <div id="lyrics-sub" class="arial"></div>
   </div>
   <div id="settings" class="columns">
-    <div class="field column is-2.20">
+    <div class="field column is-2">
       <label class="label"> Background Color: </label>
       <div class="control has-icons-left">
         <div class="select bg-color">
           <select name="bg-color" id="select-bg-color">
+            <option value="">Transparent </option>
             <option value="#0000ff">Blue</option>
             <option value="#ff0000">Red</option>
             <option value="#00ff00">Green</option>
@@ -108,6 +111,17 @@
     <div class="field column is-2">
       <label class="label"> Controls: </label>
       <span class="tag is-white">Esc</span> to hide this bar.
+      <label class="label"> Zoom: </label>
+      <button class="button white" id="zoom-up">
+        <span class="icon is-small">
+          <i class="fas fa-plus"></i>
+        </span>
+      </button>
+      <button class="button white" id="zoom-down">
+        <span class="icon is-small">
+          <i class="fas fa-minus"></i>
+        </span>
+      </button>
     </div>
   </div>
 </body>

@@ -75,14 +75,15 @@
 }
 
 html {
+  background-color: rgba(0,0,0,0)!important;
   height: 100%;
   margin: 0;
   padding: 0;
   width: 100%;
-  overflow: hidden;
+  overflow: hidden!important;
 }
 body {
-  background: #ffffff;
+  background-color: rgba(0,0,0,0)!important;
   height: 100%;
   margin: 0;
   overflow: hidden;
@@ -90,7 +91,7 @@ body {
   width: 100%;
 }
 #wrapper {
-  background: blue;
+  background-color: rgba(0,0,0,0)!important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -109,7 +110,7 @@ body {
     -1px -1px 15px rgba(0,0,0,1), 
     1px -1px 15px rgba(0,0,0,1), 
     -1px 1px 15px rgba(0,0,0,1);
-  height: 600px;
+  height: 800px;
   width: 100%;
 }
 #lyrics .title-text {
@@ -203,6 +204,7 @@ body {
   background: #000000;
   background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(36, 57, 64, 1) 51%, rgba(77, 64, 0, 1) 100%);
   z-index: 99;
+  overflow: hidden;
 }
 .column {
   text-align: left;
