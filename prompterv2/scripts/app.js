@@ -14,6 +14,8 @@ $(document).ready(function() {
 
       for (let j = 0; j < lyrics[i].length; j++) {
 
+        if (lyrics[i][j]=='') continue;
+
         lyrics[i][j] = lyrics[i][j].replace(' | ','<br>');
 
         if (lyrics[i][j].includes('[Title]')) {
@@ -41,6 +43,8 @@ $(document).ready(function() {
       lyrics[i] = lyrics[i].trim().split('\n');//.join("<br>");
 
       for (let j = 0; j < lyrics[i].length; j++) {
+        
+        if (lyrics[i][j]=='') continue;
         
         lyrics[i][j] = lyrics[i][j].replace(' | ',' ');
 
@@ -152,9 +156,11 @@ $(document).ready(function() {
 
   var hide = function () {
     let $el = $('#lyrics');
+    let $el2 = $('#lyrics-sub');
 
     // Step 1: fade out while staying zoomed in
     $el.removeClass("on").addClass("fade");
+    $el2.removeClass("on").addClass("fade");
 
     // Step 2: after fade finishes
     $el.off("transitionend").one("transitionend", function(e) {
@@ -163,13 +169,21 @@ $(document).ready(function() {
         $el.removeClass("fade").addClass("off");
       }
     });
+    $el2.off("transitionend").one("transitionend", function(e) {
+      if (e.originalEvent.propertyName === "opacity") {
+        // Snap scale back to normal while invisible
+        $el2.removeClass("fade").addClass("off");
+      }
+    });
   };
 
   var show = function () {
     let $el = $('#lyrics');
+    let $el2 = $('#lyrics-sub');
 
     // Step 1: go directly from hidden to zoomed in + fade in
     $el.removeClass("off fade").addClass("on");
+    $el2.removeClass("off fade").addClass("on");
   };
 
   $("#open_lyrics_file").on('change', function (event) {
