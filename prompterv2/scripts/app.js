@@ -264,12 +264,12 @@ $(document).ready(function() {
   $('#zoom-up').on('click', function () {
     zoom = zoom + .25;
     $('#lyrics').css('zoom', zoom);
-    $('#lyrics-sub').css('zoom', zoom);
+    //$('#lyrics-sub').css('zoom', zoom);
   });
   $('#zoom-down').on('click', function () {
     zoom = zoom - .25;
     $('#lyrics').css('zoom', zoom);
-    $('#lyrics-sub').css('zoom', zoom);
+    //$('#lyrics-sub').css('zoom', zoom);
   });
 });
 
