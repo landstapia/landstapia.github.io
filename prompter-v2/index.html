@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompter Pro | Dark Messenger</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+  <script src="https://code.jquery.com/jquery-4.0.0-beta.min.js"></script>
+
+  <style>
+    :root { 
+      --m-blue: #0084FF; 
+      --m-black: #050505;
+      --m-dark-grey: #1c1e21;
+      --m-border: #333;
+    }
+
+    html, body {
+      margin: 0; 
+      padding: 0; 
+      width: 100%; 
+      height: 100%;
+      background-color: #000; 
+      color: #fff;
+      overflow: hidden; 
+    }
+
+    #prompt-container {
+      overflow: hidden;
+      width: 100vw; 
+      min-height: 100vh;
+      padding: 30vh 5% 90vh 5%;
+      font-size: 85px; 
+      font-weight: 800; 
+      line-height: 1.3;
+      text-align: center; 
+    }
+
+    #img-lyrics { 
+      display: block; 
+      width: 100vw; 
+      height: auto; 
+      margin: 0; 
+      overflow: hidden;
+    }
+    
+    /* Dark Menu UI */
+    #menu-container {
+      position: fixed; bottom: 0; width: 100%; height: 9rem;
+      background: var(--m-black); 
+      color: #fff; z-index: 1000;
+      padding: 1.5rem; transition: transform 0.4s cubic-bezier(0.1, 0.7, 0.1, 1);
+      border-top: 1px solid var(--m-border);
+      box-shadow: 0 -10px 30px rgba(0,0,0,0.8);
+    }
+    #menu-container.is-hidden-menu { transform: translateY(105%); }
+    
+    .messenger-btn { 
+      background: var(--m-blue) !important; 
+      color: #fff !important; 
+      border-radius: 20px !important; 
+      border: none; cursor: pointer; 
+      padding: 0.6em 2em; font-weight: bold;
+      transition: opacity 0.2s;
+    }
+    .messenger-btn:hover { opacity: 0.8; }
+
+    /* Search Input Dark Styling */
+    .input { 
+      background-color: var(--m-dark-grey) !important;
+      border: 1px solid var(--m-border) !important;
+      color: #fff !important;
+      border-radius: 20px !important; 
+    }
+    .input::placeholder { color: #888; }
+    .input:focus { border-color: var(--m-blue) !important; box-shadow: 0 0 0 0.125em rgba(0, 132, 255, 0.25) !important; }
+
+    /* Search Results - Floating Bubbles */
+    .search-results {
+      position: absolute; bottom: 105%; left: 0; width: 100%;
+      background: var(--m-dark-grey); 
+      border: 1px solid var(--m-border);
+      max-height: 300px; overflow-y: auto; border-radius: 12px;
+      display: none; box-shadow: 0 -10px 25px rgba(0,0,0,0.5);
+    }
+    .result-item { 
+      padding: 12px 20px; cursor: pointer; 
+      border-bottom: 1px solid var(--m-border); 
+      color: #ddd; font-size: 0.95rem; 
+    }
+    .result-item.is-active { background-color: var(--m-blue); color: #fff; font-weight: bold; }
+
+    .label { color: var(--m-blue); text-transform: uppercase; letter-spacing: 1px; font-size: 0.75rem; }
+    .help-text { color: #666; font-size: 0.7rem; margin-top: 10px; border-left: 2px solid var(--m-blue); padding-left: 10px; }
+  </style>
+</head>
+<body>
+  <div id="wrapper">
+    <div id="content-area">
+      <div id="prompt-container">
+        <p class="has-text-grey">Ready to go. Select folder or search script.</p>
+      </div>
+    </div>
+
+    <div id="menu-container">
+      <div class="container">
+        <div class="columns is-mobile is-multiline">
+          <div class="column is-12-mobile is-5-tablet">
+            <div class="field">
+              <label class="label">Library Root</label>
+              <input type="file" id="directory-selector" webkitdirectory directory multiple style="display:none">
+              <button class="messenger-btn" onclick="document.getElementById('directory-selector').click()">
+                Select Folder
+              </button>
+              <p id="status-display" class="is-size-7 has-text-grey-light mt-2"></p>
+            </div>
+          </div>
+
+          <div class="column is-12-mobile is-7-tablet">
+            <div class="field" style="position: relative;">
+              <label class="label">Quick Search (Esc to Focus)</label>
+              <div class="control has-icons-left">
+                <input class="input" type="text" id="script-search" placeholder="Search by name..." autocomplete="off">
+              </div>
+              <div id="search-results" class="search-results"></div>
+            </div>
+            
+            <div class="help-text">
+              <b>L/R Arrows:</b> Auto | <b>U/D Arrows:</b> Manual (Brake) | <b>1-5:</b> Speed | <b>Enter:</b> Load
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(() => {
+      let currentSpeed = 1;
+      let scrollValue = 0; 
+      let isSticky = false;
+      let fileMap = {}; 
+      let filteredFiles = [];
+      let selectedIdx = 0;
+
+      const $menu = $("#menu-container");
+      const $prompt = $("#prompt-container");
+      const $speedTag = $("#speed-tag");
+      const $search = $("#script-search");
+      const $results = $("#search-results");
+
+      // --- DIRECTORY INDEXING ---
+      $("#directory-selector").on('change', function(e) {
+        const files = e.target.files;
+        fileMap = {};
+        const validExts = ['txt', 'jpg', 'jpeg', 'png'];
+        Array.from(files).forEach(file => {
+          const ext = file.name.split('.').pop().toLowerCase();
+          if (validExts.includes(ext)) {
+            fileMap[file.webkitRelativePath] = file;
+          }
+        });
+        $("#status-display").text(`${Object.keys(fileMap).length} files indexed.`);
+        $search.focus();
+      });
+
+      // --- SEARCH LOGIC (Prefix-based) ---
+      $search.on('input', function() {
+        const query = $(this).val().toLowerCase();
+        $results.empty().hide();
+        if (!query) return;
+
+        filteredFiles = Object.keys(fileMap).filter(path => {
+          const fileName = path.split('/').pop().toLowerCase();
+          return fileName.startsWith(query);
+        });
+
+        if (filteredFiles.length > 0) {
+          selectedIdx = 0;
+          renderResults();
+          $results.show();
+        }
+      });
+
+      function renderResults() {
+        $results.empty();
+        filteredFiles.forEach((path, i) => {
+          const fileName = path.split('/').pop();
+          const div = $('<div>').addClass('result-item').text(fileName);
+          if (i === selectedIdx) div.addClass('is-active');
+          div.on('click', () => loadFile(path));
+          $results.append(div);
+        });
+      }
+
+      function loadFile(path) {
+        const file = fileMap[path];
+        const reader = new FileReader();
+        const ext = file.name.split('.').pop().toLowerCase();
+
+        reader.onload = () => {
+          if (['jpg', 'jpeg', 'png'].includes(ext)) {
+            $prompt.html(`<img src="${reader.result}" id="img-lyrics">`).css('padding', '0');
+          } else {
+            const safeText = reader.result.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            $prompt.html(safeText.replace(/\n/g, '<br>')).css('padding', '30vh 5% 90vh 5%');
+          }
+          $menu.addClass('is-hidden-menu');
+          $results.hide();
+          $search.val('').blur();
+          window.scrollTo(0,0);
+          scrollValue = 0; isSticky = false;
+        };
+        ['jpg', 'jpeg', 'png'].includes(ext) ? reader.readAsDataURL(file) : reader.readAsText(file);
+      }
+
+      fps = 16.67;
+      speed = 1;
+      interval = null;
+      lastPressed = "";
+
+      let down = function (event) { 
+        $("body").scrollTop($("body").scrollTop() + speed);
+      }
+      let up = function (event) { 
+        $("body").scrollTop($("body").scrollTop() - speed);
+      }
+
+      $(document).on('keyup', (e) => {
+        if ((["ArrowDown", "ArrowUp", "7", "8"].includes(e.key)) && interval != null) {
+          clearInterval(interval);
+          interval = null;
+        }
+      });
+
+      $(document).on('keydown', (e) => {
+
+        if (e.key === "Escape") {
+          $menu.toggleClass('is-hidden-menu');
+          
+          if (!$menu.hasClass('is-hidden-menu')) {
+            setTimeout(() => $search.focus(), 50);
+          }
+          else {
+            document.activeElement.blur();
+            setTimeout(() => $("#prompt-container").focus(), 50);
+          }
+        }
+
+        // Navigation within Search Box
+        if (document.activeElement === $search[0]) {
+          if (e.key === "ArrowDown") {
+            e.preventDefault();
+            selectedIdx = (selectedIdx + 1) % filteredFiles.length;
+            renderResults();
+          } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            selectedIdx = (selectedIdx - 1 + filteredFiles.length) % filteredFiles.length;
+            renderResults();
+          } else if (e.key === "Enter") {
+            if (filteredFiles[selectedIdx]) loadFile(filteredFiles[selectedIdx]);
+          }
+          return;
+        }
+
+
+        if (["1", "2", "3", "4", "5"].includes(e.key)) {
+          const speeds = { "1": 1, "2": 3, "3": 5, "4": 10, "5": 20 };
+          speed = speeds[e.key];
+        }
+
+        if ((e.key === "ArrowUp" || e.key === "7") && interval == null) {
+          interval = setInterval(up, fps);
+          lastPressed = "ArrowUp";
+        } 
+        if ((e.key === "ArrowDown" || e.key === "8") && interval == null) {
+          interval = setInterval(down, fps);
+          lastPressed = "ArrowDown";
+        }
+        if ((e.key === "ArrowLeft" || e.key === "9") && interval == null) {
+          interval = setInterval(up, fps);
+          lastPressed = "ArrowLeft";
+        }
+        if ((e.key === "ArrowRight" || e.key === "0")  && interval == null) {
+          interval = setInterval(down, fps);
+          lastPressed = "ArrowRight";
+        }
+        
+        if (e.key === "Home") { 
+          $("body").scrollTop(0);
+        }
+      });
+
+    });
+  </script>
+</body>
+</html>

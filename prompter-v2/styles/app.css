@@ -1,0 +1,38 @@
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+body {
+  margin: 0;
+  overflow: hidden;
+  width: 100%;
+  color: black;
+}
+#wrapper {
+  position: absolute;
+  width: 100%;
+}
+div#menu-container {
+  color: black;
+  padding: 1rem 2rem;
+  position: fixed!important;
+  height: 16rem;
+  width: 100%;
+  bottom: 0;
+  z-index: 999;
+}
+div#prompt-container {
+  padding: 15% 3% 75% 3%;
+  line-height: 130%;
+  font-size: 85px;
+  text-align: center; 
+  width: 100%;
+  top: 0!important;
+}
+p {
+  margin: 0;
+}
+.bold {
+  font-weight: bold;
+}
