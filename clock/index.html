@@ -1,60 +1,203 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Clock</title>
-  <style>
-    body {
-      background-color: black;
-    }
-    #output, #text {
-      display: inline-block;
-      font-family: Arial;
-      font-size: 50px;
-      font-weight: bold;
-      text-align: center;
-      color: white;
-      border-radius: 10px;
-      padding: 10px;
-      background-color: rgba(0,0,0,0);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Clock</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <style>
+        :root {
+            --accent-color: #168AFF;
+            --bg-overlay: rgba(0, 0, 0, 0.7);
+        }
+
+        body {
+            background-color: black;
+            color: white;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s ease;
+            overflow: hidden;
+        }
+
+        #output {
+            font-size: clamp(32px, 8vw, 80px);
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: -2px;
+            padding: 20px;
+            border-radius: 15px;
+            transition: color 0.3s ease;
+        }
+
+        #settings-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-overlay);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #settings-dialog {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.75);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .input-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 8px;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        input {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #333;
+            color: white;
+            padding: 8px 0;
+            font-size: 16px;
+            outline: none;
+            width: 140px;
+            text-align: center;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-bottom-color: var(--accent-color);
+        }
+
+        #preview-box {
+            width: 100%;
+            text-align: center;
+            font-size: 13px;
+            color: var(--accent-color);
+            font-family: 'Courier New', monospace;
+            opacity: 0.8;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .esc-hint {
+            font-size: 10px;
+            color: #555;
+        }
+    </style>
 </head>
+<body>
 
-<body translate="no" style="width: 100%; text-align: center;">
-  <div id="output"></div>
+    <div id="output">00:00:00</div>
 
-  <div id="console"></div>
+    <div id="settings-overlay">
+        <div id="settings-dialog">
+            <div class="input-row">
+                <div class="field-group">
+                    <label>Display Text</label>
+                    <input type="text" id="prefix-input" placeholder="Static Text">
+                </div>
 
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js'></script>
-  <script>
-    // https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
-    var urlParams;
-    (function () {
-        var match,
-            pl     = /\+/g,  // Regex for replacing addition symbol with a space
-            search = /([^&=]+)=?([^&]*)/g,
-            decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
-            query  = window.location.search.substring(1);
-        urlParams = {};
-        while (match = search.exec(query))
-           urlParams[decode(match[1])] = decode(match[2]);
-    })();
-    var output = document.getElementById("output");
-    var text = document.getElementById("output");
+                <div class="field-group">
+                    <label>Moment Format</label>
+                    <input type="text" id="format-input" value="LL LTS">
+                </div>
 
-    console.log(urlParams);
+                <div class="field-group">
+                    <label>Text Color (Hex)</label>
+                    <input type="text" id="color-input" placeholder="#FFFFFF" value="#FFFFFF">
+                </div>
 
-    if (urlParams["style"]) output.setAttribute("style", urlParams["style"]);
-    if (urlParams["bodyStyle"]) document.body.setAttribute("style", urlParams["bodyStyle"]);
-    
-    var c;
+                <div class="field-group">
+                    <label>BG Color (Hex)</label>
+                    <input type="text" id="bg-input" placeholder="Transparent" value="#000000">
+                </div>
+            </div>
 
-    setInterval(c = function() {
-        output.innerText = `${urlParams["text"] ? urlParams["text"] + '  •  ' : ''}${moment().format(urlParams["format"] || 'LL LTS [GMT]ZZ')}`;
-    }, 1000);
-    c();
-  </script>
+            <div id="preview-box">Preview: LL LTS</div>
+            <div class="esc-hint">Press <b>ESC</b> to apply changes</div>
+        </div>
+    </div>
+
+    <script>
+        const output = document.getElementById('output');
+        const overlay = document.getElementById('settings-overlay');
+        const formatInput = document.getElementById('format-input');
+        const prefixInput = document.getElementById('prefix-input');
+        const colorInput = document.getElementById('color-input');
+        const bgInput = document.getElementById('bg-input');
+        const previewBox = document.getElementById('preview-box');
+
+        let currentFormat = "LL LTS";
+        let currentPrefix = "";
+
+        function updateClock() {
+            const now = moment();
+            const timePart = now.format(currentFormat || 'LL LTS');
+            
+            // Text and Colors
+            output.innerText = currentPrefix ? `${currentPrefix} • ${timePart}` : timePart;
+            output.style.color = colorInput.value || "#FFFFFF";
+            
+            // Background Logic: Blank = Transparent
+            const bgColor = bgInput.value.trim();
+            document.body.style.backgroundColor = bgColor === "" ? "transparent" : bgColor;
+            
+            if (overlay.style.display === "flex") {
+                previewBox.innerText = `Output Preview: ${timePart}`;
+            }
+        }
+
+        function toggleOverlay() {
+            const isVisible = overlay.style.display === "flex";
+            overlay.style.display = isVisible ? "none" : "flex";
+            if (!isVisible) {
+                formatInput.focus();
+                updateClock();
+            }
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === "Escape") toggleOverlay();
+        });
+
+        // Add listeners to all inputs for real-time updates
+        [formatInput, prefixInput, colorInput, bgInput].forEach(el => {
+            el.addEventListener('input', updateClock);
+        });
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
 </body>
 </html>
