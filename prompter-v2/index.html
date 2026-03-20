@@ -153,7 +153,7 @@
       $("#directory-selector").on('change', function(e) {
         const files = e.target.files;
         fileMap = {};
-        const validExts = ['txt', 'jpg', 'jpeg', 'png'];
+        const validExts = ['jpg', 'jpeg', 'png'];
         Array.from(files).forEach(file => {
           const ext = file.name.split('.').pop().toLowerCase();
           if (validExts.includes(ext)) {
@@ -208,8 +208,7 @@
           $menu.addClass('is-hidden-menu');
           $results.hide();
           $search.val('').blur();
-          window.scrollTo(0,0);
-          scrollValue = 0; isSticky = false;
+          $("body").scrollTop(0);
         };
         ['jpg', 'jpeg', 'png'].includes(ext) ? reader.readAsDataURL(file) : reader.readAsText(file);
       }
