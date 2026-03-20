@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCGI Lecheria | Invitation Gen (jQuery 4.0)</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/versions/bulma-no-dark-mode.min.css">
+    <script src="https://code.jquery.com/jquery-4.0.0-beta.min.js"></script>
+    <style>
+        :root {
+            --bg-dark: #0a0e14;
+            --card-dark: #161b22;
+            --mcgi-blue: #1b4f72;
+            --mcgi-gold: #ffcc00;
+            --text-main: #f0f6fc;
+            --border-color: #30363d;
+        }
+
+        body { 
+            background-color: var(--bg-dark); 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            color: var(--text-main);
+        }
+
+        .container { max-width: 600px !important; }
+
+        .card { 
+            background-color: var(--card-dark); 
+            border-radius: 12px; 
+            overflow: hidden; 
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+        }
+
+        .card-header { 
+            background-color: var(--mcgi-blue); 
+            border-bottom: 2px solid var(--mcgi-gold);
+        }
+
+        .card-header-title { color: var(--mcgi-gold) !important; font-size: 1.25rem; }
+
+        .label { color: var(--mcgi-gold) !important; font-size: 0.9rem; }
+
+        /* Dark Mode Inputs */
+        .input, .textarea, .select select {
+            background-color: #0d1117 !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--text-main) !important;
+        }
+
+        .input::placeholder, .textarea::placeholder { color: #8b949e !important; }
+
+        .input:focus, .textarea:focus, .select select:focus {
+            border-color: var(--mcgi-gold) !important;
+            box-shadow: 0 0 0 0.125em rgba(255, 204, 0, 0.25) !important;
+        }
+
+        .checkbox { color: var(--text-main); }
+        .checkbox:hover { color: var(--mcgi-gold); }
+
+        hr { background-color: var(--border-color); height: 1px; }
+
+        .button.is-link {
+            background-color: var(--mcgi-gold) !important;
+            color: var(--mcgi-blue) !important;
+            border: none;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .button.is-link:hover {
+            background-color: #e6b800 !important;
+            transform: translateY(-2px);
+        }
+
+        .error-text { color: #ff4d4d; font-size: 0.85rem; display: none; margin-top: 5px; font-weight: bold; }
+
+        #toast {
+            visibility: hidden; min-width: 250px; 
+            background-color: var(--mcgi-gold); 
+            color: var(--mcgi-blue);
+            font-weight: bold;
+            text-align: center; border-radius: 50px; padding: 12px; position: fixed;
+            z-index: 1000; left: 50%; bottom: 30px; transform: translateX(-50%);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+    </style>
+</head>
+<body>
+
+<div class="container px-4">
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">Invitation Builder</p>
+        </header>
+
+        <div class="card-content">
+            <div class="field">
+                <label class="label">Service Type</label>
+                <div class="control">
+                    <div class="select is-fullwidth">
+                        <select id="serviceType">
+                            <optgroup label="Main Services">
+                                <option value="Prayer Meeting">Prayer Meeting</option>
+                                <option value="Worship Service">Worship Service</option>
+                                <option value="Thanksgiving of God's People">Thanksgiving of God's People</option>
+                            </optgroup>
+                            <optgroup label="Special Gatherings">
+                                <option value="Lord's Supper">Lord's Supper</option>
+                                <option value="Christian New Year">Christian New Year</option>
+                                <option value="Glorious Thanksgiving">Glorious Thanksgiving</option>
+                                <option value="Mass Indoctrination">Mass Indoctrination</option>
+                                <option value="Mass Baptism">Mass Baptism</option>
+                                <option value="Tanging Pulong Panalangin">Tanging Pulong Panalangin</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Date</label>
+                <div class="control">
+                    <input class="input" type="date" id="serviceDate">
+                </div>
+                <p id="dateError" class="error-text">⚠️ Invalid day for this service type.</p>
+            </div>
+
+            <div class="field">
+                <label class="checkbox has-text-weight-bold mt-2">
+                    <input type="checkbox" id="isSpecial"> Special Batch (Manual Entry)
+                </label>
+            </div>
+
+            <hr>
+
+            <div id="regularSection" class="field">
+                <label class="label">Select Batch</label>
+                <div class="control">
+                    <div class="select is-fullwidth">
+                        <select id="batchSelect"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div id="specialSection" style="display: none;">
+                <div class="columns is-mobile">
+                    <div class="column">
+                        <label class="label is-small">Time</label>
+                        <input class="input" type="text" id="customTime" placeholder="8:30 AM">
+                    </div>
+                    <div class="column">
+                        <label class="label is-small">Assembly</label>
+                        <input class="input" type="text" id="customAssembly" placeholder="7:30 AM">
+                    </div>
+                </div>
+            </div>
+
+            <div class="field mt-4">
+                <label class="label">Raw Zoom Invite</label>
+                <div class="control">
+                    <textarea class="textarea" id="rawInvite" placeholder="Paste Zoom text here..." rows="3"></textarea>
+                </div>
+            </div>
+
+            <button id="btnGenerate" class="button is-link is-fullwidth is-medium mt-4">
+                <strong>Generate & Copy</strong>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="toast">✅ Copied to Clipboard!</div>
+
+<script>
+$(document).ready(function() {
+    const config = {
+        "Prayer Meeting": {
+            days: [3, 4], 
+            batches: [
+                { name: "Wednesday Batch 1", type: "Live", time: "4:30 AM", assembly: "3:30 AM" },
+                { name: "Wednesday Batch 2", type: "Viewing", time: "8:30 AM", assembly: "7:30 AM" },
+                { name: "Wednesday Batch 3", type: "Viewing", time: "6:00 PM", assembly: "5:00 PM" },
+                { name: "Thursday Batch 1", type: "Viewing", time: "2:30 PM", assembly: "1:30 PM" },
+                { name: "Thursday Batch 2", type: "Viewing", time: "8:00 PM", assembly: "7:00 PM" }
+            ]
+        },
+        "Worship Service": {
+            days: [6, 0], 
+            batches: [
+                { name: "Saturday Batch 1", type: "Live", time: "4:30 AM", assembly: "3:30 AM" },
+                { name: "Saturday Batch 2", type: "Viewing", time: "8:30 AM", assembly: "7:30 AM" },
+                { name: "Saturday Batch 3", type: "Viewing", time: "12:30 PM", assembly: "11:30 AM" },
+                { name: "Sunday Batch 1", type: "Viewing", time: "2:30 PM", assembly: "1:30 PM" },
+                { name: "Sunday Batch 2", type: "Viewing", time: "7:00 PM", assembly: "6:00 PM" }
+            ]
+        },
+        "Thanksgiving of God's People": {
+            days: [6, 0],
+            batches: [
+                { name: "Saturday Batch", type: "Live", time: "5:00 PM", assembly: "4:00 PM" },
+                { name: "Sunday Batch 1", type: "Viewing", time: "6:00 AM", assembly: "5:00 AM" },
+                { name: "Sunday Batch 2", type: "Viewing", time: "6:30 PM", assembly: "5:30 PM" }
+            ]
+        },
+        "Lord's Supper": { days: null, batches: [] },
+        "Christian New Year": { days: null, batches: [] },
+        "Glorious Thanksgiving": { days: null, batches: [] },
+        "Mass Indoctrination": { days: null, batches: [] },
+        "Mass Baptism": { days: null, batches: [] },
+        "Tanging Pulong Panalangin": { days: null, batches: [] }
+    };
+
+    const today = new Date().toISOString().split('T')[0];
+    $('#serviceDate').val(today);
+
+    function updateBatches() {
+        const service = $('#serviceType').val();
+        const $batchSelect = $('#batchSelect');
+        const hasBatches = config[service].batches?.length > 0;
+
+        $batchSelect.empty();
+        if (hasBatches) {
+            config[service].batches.forEach((b, i) => {
+                $batchSelect.append(`<option value="${i}">${b.name} (${b.time}) - ${b.type}</option>`);
+            });
+            $('#isSpecial').prop('checked', false);
+        } else {
+            $('#isSpecial').prop('checked', true);
+        }
+        toggleSpecial();
+    }
+
+    function toggleSpecial() {
+        const isChecked = $('#isSpecial').is(':checked');
+        $('#regularSection').toggle(!isChecked);
+        $('#specialSection').toggle(isChecked);
+    }
+
+    function validateDate() {
+        const service = $('#serviceType').val();
+        const dateVal = $('#serviceDate').val();
+        const allowedDays = config[service].days;
+
+        if (!dateVal || !allowedDays) {
+            $('#dateError').hide();
+            $('#serviceDate').removeClass('is-danger');
+            return;
+        }
+
+        const selectedDay = new Date(dateVal).getUTCDay();
+        const isValid = allowedDays.includes(selectedDay);
+
+        $('#dateError').toggle(!isValid);
+        $('#serviceDate').toggleClass('is-danger', !isValid);
+    }
+
+    function generate() {
+        const service = $('#serviceType').val();
+        const dateVal = $('#serviceDate').val();
+        const isSpecial = $('#isSpecial').is(':checked');
+        const rawText = $('#rawInvite').val();
+
+        let fTime, fAssembly, fType;
+
+        if (isSpecial) {
+            fTime = $('#customTime').val() || "TBD";
+            fAssembly = $('#customAssembly').val();
+            fType = "Special";
+        } else {
+            const b = config[service].batches[$('#batchSelect').val()];
+            fTime = b.time;
+            fAssembly = b.assembly;
+            fType = b.type;
+        }
+
+        const dateObj = dateVal ? new Date(dateVal) : new Date();
+        const dateStr = dateObj.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+        const id = (rawText.match(/Meeting ID:\s*([\d\s]+)/) || [0, "---"])[1].trim();
+        const pass = (rawText.match(/Passcode:\s*(\w+)/) || [0, "---"])[1];
+        const link = (rawText.match(/https:\/\/mcgi-org\.zoom\.us\/j\/\S+/) || ["---"])[0];
+
+        const result = `${service.toUpperCase()}
+${dateStr} | ${fTime} (${fType})
+
+${fAssembly ? `Assembly Time: ${fAssembly}` : ""}
+
+📍Maaari lamang po na sumunod sa mga patakaran na ito bago dumalo sa ating mga pagkakatipon.
+
+1. Ikaw po ay nasa TAKDANG ORAS.
+2. Ang iyong CAMERA ay BUKAS.
+3. Ikaw ay nasa GITNA ng iyong CAMERA SCREEN.
+4. Magsuot ng ANGKOP NA GAYAK para sa pagkakatipon.
+5. Ikaw po ay NAKATUTOK sa pakikinig.
+
+1 Timoteo 1:5
+
+--
+
+Meeting ID: ${id}
+Passcode: ${pass}
+Link: ${link}`;
+
+        navigator.clipboard.writeText(result.trim()).then(() => {
+            $('#toast').addClass('show');
+            setTimeout(() => $('#toast').removeClass('show'), 3000);
+        });
+    }
+
+    $('#serviceType').on('change', () => { updateBatches(); validateDate(); });
+    $('#serviceDate').on('change', validateDate);
+    $('#isSpecial').on('change', toggleSpecial);
+    $('#btnGenerate').on('click', generate);
+
+    updateBatches();
+});
+</script>
+
+</body>
+</html>
