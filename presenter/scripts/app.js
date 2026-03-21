@@ -4,38 +4,39 @@ $(document).ready(function() {
 
   let socket;
 
-  // Check if we are running on a server before trying to connect
+  // 1. Check if we have a host
   if (location.host) {
-    socket = new WebSocket(`ws://${location.host}`);
+    // 2. Determine protocol: use 'wss://' for HTTPS and 'ws://' for HTTP
+    const protocol = location.protocol === 'https:' ? 'wss://' : 'ws://';
+    
+    try {
+      socket = new WebSocket(`${protocol}${location.host}`);
 
-    socket.onerror = (err) => {
-      console.error("WebSocket error:", err);
-    };
+      socket.onopen = () => console.log("Connected to WebSocket");
+      
+      socket.onerror = (err) => {
+        console.error("WebSocket error:", err);
+      };
 
-    socket.onclose = () => {
-      console.log("WebSocket closed");
-    };
+      socket.onclose = () => {
+        console.log("WebSocket closed");
+      };
 
-    socket.onmessage = (event) => {
-
-      let message = JSON.parse(event.data);
-      console.log(message);
-
-      if (message.type == 'lyric') {
-        LYRICS_MAIN = message.content.main;
-        LYRICS_SUB = message.content.sub;
-
-      }
-      else if (message.type == 'position') {
-        lyricPosition = message.content;
-      }
-      else if (message.type == 'zoom') {
-
-      }
-    };
-  } 
-  else {
-    console.log("WebSocket skipped: Running from a local file (no host).");
+      socket.onmessage = (event) => {
+        let message = JSON.parse(event.data);
+        
+        if (message.type == 'lyric') {
+          LYRICS_MAIN = message.content.main;
+          LYRICS_SUB = message.content.sub;
+        } 
+        else if (message.type == 'position') {
+          lyricPosition = message.content;
+        }
+      };
+    } 
+    catch (e) {
+      console.error("WebSocket construction failed:", e);
+    }
   }
 
   // Initialize application.
