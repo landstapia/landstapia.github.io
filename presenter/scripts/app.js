@@ -1,190 +1,165 @@
 $(document).ready(function() {
-  var LYRICS = "";
-  var LYRICS_ARRAY = [];
-  var LYRICS_ARRAY_2 = [];
-  var LYRICS_POS = 0;
 
-  var setLanguage = function () {
-    let lyrics = LYRICS.split('=');
-    
-    LYRICS_POS = 0;
+  console.log(location.host)
 
-    for (let i = 0; i < lyrics.length; i++) {
-      lyrics[i] = lyrics[i].trim().split('\n');//.join("<br>");
+  let socket;
 
-      for (let j = 0; j < lyrics[i].length; j++) {
+  // Check if we are running on a server before trying to connect
+  if (location.host) {
+    socket = new WebSocket(`ws://${location.host}`);
 
-        if (lyrics[i][j]=='') continue;
+    socket.onerror = (err) => {
+      console.error("WebSocket error:", err);
+    };
 
-        lyrics[i][j] = lyrics[i][j].replace(' | ','<br>');
+    socket.onclose = () => {
+      console.log("WebSocket closed");
+    };
 
-        if (lyrics[i][j].includes('[Title]')) {
-          let lyric = lyrics[i][j].replace('[Title]','');
-          lyrics[i][j] = `<span class="title-text">${lyric.trim()}</span>`;
-        }
-        else if (lyrics[i][j].includes('[Subtitle]')) {
-          let lyric = lyrics[i][j].replace('[Subtitle]','');
-          lyrics[i][j] = `<span class="subtitle-text">${lyric.trim()}</span>`;
-        }
-        else {
-          lyrics[i][j] = `<span class="normal-text">${lyrics[i][j]}</span>`;
-        }
+    socket.onmessage = (event) => {
+
+      let message = JSON.parse(event.data);
+      console.log(message);
+
+      if (message.type == 'lyric') {
+        LYRICS_MAIN = message.content.main;
+        LYRICS_SUB = message.content.sub;
+
       }
+      else if (message.type == 'position') {
+        lyricPosition = message.content;
+      }
+      else if (message.type == 'zoom') {
 
-      lyrics[i] = `<p>${lyrics[i].join('<br>')}</p>`;
+      }
+    };
+  } 
+  else {
+    console.log("WebSocket skipped: Running from a local file (no host).");
+  }
 
+  // Initialize application.
+
+  let FONTS = $('#text-font option').map(function () {
+    return $(this).val();
+  }).get();
+
+  let fontPosition = 0;
+
+  let LYRICS_MAIN = [];
+  let LYRICS_SUB = [];
+  let lyricPosition = 0;
+  let lyricSpeed = 1000;
+
+  let setLyrics = function (data) {
+    
+    lyricPosition = 0;
+
+    LYRICS_MAIN = data.split('=')
+      .map(section => {
+        // 1. Split into lines and remove empty ones immediately
+        const lines = section.trim().split('\n').filter(line => line.trim() !== "");
+
+        // 2. Process each line individually
+        const formattedLines = lines.map(line => {
+          let text = line.replace(' | ', '<br>').trim();
+          let className = "normal-text";
+
+          // 3. Check for specific tags and set class accordingly
+          if (text.includes('[Title]')) {
+            text = text.replace('[Title]', '').trim();
+            className = "title-text";
+          } else if (text.includes('[Subtitle]')) {
+            text = text.replace('[Subtitle]', '').trim();
+            className = "subtitle-text";
+          }
+
+          return `<span class="${className}">${text}</span>`;
+        });
+
+        // 4. Join lines with <br> and wrap in a paragraph tag
+        return `<p>${formattedLines.join('<br>')}</p>`;
+      });
+   
+    LYRICS_SUB = data.split('=').map(section => {
+      // Split into lines, trim them, and remove empty ones
+      lines = section.trim().split('\n')
+        .filter(line => line.trim() !== '')
+        .map(line => {
+          let text = line.replace(' | ', ' ').trim();
+          let className = "normal-text";
+
+          // Determine the class based on the tag
+          if (text.includes('[Title]')) {
+            text = text.replace('[Title]', '').trim();
+            className = "title-text";
+          } 
+          else if (text.includes('[Subtitle]')) {
+            text = text.replace('[Subtitle]', '').trim();
+            className = "subtitle-text";
+          }
+
+          return `<span class="${className}">${text}</span>`;
+        });
+        // Wrap the joined lines in a paragraph
+        return `<p>${lines.join('<br>')}</p>`;
+      });
+   
+    updateLyrics();
+
+    sendMessage('lyric', {main : LYRICS_MAIN, sub : LYRICS_SUB});
+  }
+
+  let $mlyrics = $('#lyrics');
+  let $slyrics = $('#lyrics-sub');
+  let $menu = $('#settings');
+
+  function sendMessage(type, content) {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      socket.send(JSON.stringify({ 
+        type : type, 'content' : content
+      }));
     }
-
-    LYRICS_ARRAY = lyrics;
-    
-    lyrics = LYRICS.split('=');
-
-    for (let i = 0; i < lyrics.length; i++) {
-      lyrics[i] = lyrics[i].trim().split('\n');//.join("<br>");
-
-      for (let j = 0; j < lyrics[i].length; j++) {
-        
-        if (lyrics[i][j]=='') continue;
-        
-        lyrics[i][j] = lyrics[i][j].replace(' | ',' ');
-
-        if (lyrics[i][j].includes('[Title]')) {
-          let lyric = lyrics[i][j].replace('[Title]','');
-          lyrics[i][j] = `<span class="title-text">${lyric.trim()}</span>`;
-        }
-        else if (lyrics[i][j].includes('[Subtitle]')) {
-          let lyric = lyrics[i][j].replace('[Subtitle]','');
-          lyrics[i][j] = `<span class="subtitle-text">${lyric.trim()}</span>`;
-        }
-        else {
-          lyrics[i][j] = `<span class="normal-text">${lyrics[i][j]}</span>`;
-        }
-      }
-
-      lyrics[i] = `<p>${lyrics[i].join('<br>')}</p>`;
-
+    else {
+      console.warn('Message sending deferred since not connected to socket.');
     }
-
-    LYRICS_ARRAY_2 = lyrics;
-
-    console.log(LYRICS_ARRAY);
-    console.log(LYRICS_ARRAY_2);
-
-    $('#lyrics').html(LYRICS_ARRAY[LYRICS_POS]);
-    $('#lyrics-sub').html(LYRICS_ARRAY_2[LYRICS_POS]);
   }
 
-  var next = function () {
-    
-    // $('#lyrics').fadeOut().promise().done(function() {
-    //   if (LYRICS_POS < LYRICS_ARRAY.length)
-    //     LYRICS_POS++;
-    //   $('#lyrics').html(LYRICS_ARRAY[LYRICS_POS]);
+  function updateLyricSpeed(seconds) {
+      // 1. Update the CSS Variable on the root (HTML) element
+      // This allows CSS like: animation-duration: var(--lyric-speed);
+      $(':root').css('--lyric-speed', seconds + 's');
 
-    //   $('#lyrics').fadeIn();
-    // });
+      // 2. Define a "Constant" in the global window object for JS timing
+      // We convert it to milliseconds for setTimeout/delay use
+      lyricSpeed = seconds * 1000;
 
-    let $el = $('#lyrics');
-    let $el2 = $('#lyrics-sub');
-
-    // Step 1: fade out while staying zoomed in
-    $el.removeClass("scale-on").addClass("fade");
-    $el2.removeClass("on").addClass("fade");
-
-    // Step 2: after fade finishes
-    $el.one("transitionend", function(e) {
-      if (e.originalEvent.propertyName === "opacity") {
-
-        // Snap scale back to normal while invisible
-        $el.removeClass("fade").addClass("scale-off");
-        $el2.removeClass("fade").addClass("off");
-
-        // Change the position of the lyrics
-        if (LYRICS_POS < LYRICS_ARRAY.length) LYRICS_POS++;
-        $el.html(LYRICS_ARRAY[LYRICS_POS]);
-        $el2.html(LYRICS_ARRAY_2[LYRICS_POS]);
-
-        // Force reflow so browser registers the scale reset
-        void $el[0].offsetWidth;
-
-        // Step 3: fade in again
-        $el.removeClass("scale-off").addClass("scale-on");
-        $el2.removeClass("off").addClass("on");
-      }
-    });
-
-  }
-
-  var prev = function () {
-    // $('#lyrics').fadeOut().promise().done(function() {
-    //   if (LYRICS_POS > 0)
-    //     LYRICS_POS--;
-    //   $('#lyrics').html(LYRICS_ARRAY[LYRICS_POS]);
-
-    //   $('#lyrics').fadeIn();
-    // });
-
-    let $el = $('#lyrics');
-    let $el2 = $('#lyrics-sub');
-
-    // Step 1: fade out while staying zoomed in
-    $el.removeClass("scale-on").addClass("fade");
-    $el2.removeClass("on").addClass("fade");
-
-    // Step 2: after fade finishes
-    $el.one("transitionend", function(e) {
-      if (e.originalEvent.propertyName === "opacity") {
-
-        // Snap scale back to normal while invisible
-        $el.removeClass("fade").addClass("scale-off");
-        $el2.removeClass("fade").addClass("off");
-
-        // Change the position of the lyrics
-        if (LYRICS_POS < LYRICS_ARRAY.length) LYRICS_POS--;
-        $el.html(LYRICS_ARRAY[LYRICS_POS]);
-        $el2.html(LYRICS_ARRAY_2[LYRICS_POS]);
-
-        // Force reflow so browser registers the scale reset
-        void $el[0].offsetWidth;
-
-        // Step 3: fade in again
-        $el.removeClass("scale-off").addClass("scale-on");
-        $el2.removeClass("off").addClass("on");
-      }
-    });
-  }
-
-  var hide = function () {
-    let $el = $('#lyrics');
-    let $el2 = $('#lyrics-sub');
-
-    // Step 1: fade out while staying zoomed in
-    $el.removeClass("on").addClass("fade");
-    $el2.removeClass("on").addClass("fade");
-
-    // Step 2: after fade finishes
-    $el.off("transitionend").one("transitionend", function(e) {
-      if (e.originalEvent.propertyName === "opacity") {
-        // Snap scale back to normal while invisible
-        $el.removeClass("fade").addClass("off");
-      }
-    });
-    $el2.off("transitionend").one("transitionend", function(e) {
-      if (e.originalEvent.propertyName === "opacity") {
-        // Snap scale back to normal while invisible
-        $el2.removeClass("fade").addClass("off");
-      }
-    });
+      //console.log("Speed updated: " + seconds + "s / " + lyricSpeed + "ms");
   };
 
-  var show = function () {
-    let $el = $('#lyrics');
-    let $el2 = $('#lyrics-sub');
+  // Function to change lyrics
+  function updateLyrics() {
 
-    // Step 1: go directly from hidden to zoomed in + fade in
-    $el.removeClass("off fade").addClass("on");
-    $el2.removeClass("off fade").addClass("on");
-  };
+    // 1. Add the animation class
+    $mlyrics.addClass("animate-lyric");
+    $slyrics.removeClass("on").addClass("off");
+
+    // 2. Use a Timer or AnimationEvent to swap text at the 50% mark (300ms)
+    setTimeout(function() {
+      $mlyrics.html(LYRICS_MAIN[lyricPosition]);
+      $slyrics.html(LYRICS_SUB[lyricPosition]);
+      sendMessage('position', lyricPosition);
+    }, lyricSpeed/4); 
+
+    // 3. Clean up the class when finished so it can be re-added later
+    $mlyrics.one("animationend", function() {
+      $mlyrics.removeClass("animate-lyric");
+    });
+    $slyrics.one("transitionend", function() {
+      $slyrics.removeClass("off").addClass("on");
+    });
+  }
+
 
   $("#open_lyrics_file").on('change', function (event) {
 
@@ -197,8 +172,7 @@ $(document).ready(function() {
       url: './' +  $(this).prop('files')[0].name,
       type: 'GET',
       success: function(data){
-        LYRICS = data;
-        setLanguage();
+        setLyrics(data);
       },
       error: function(data) {
         console.log(data);
@@ -210,65 +184,85 @@ $(document).ready(function() {
         if (isTxt) {
           reader.readAsText(event.target.files[0]);
           reader.onload = function(){
-            LYRICS = reader.result;
-            setLanguage();
+            setLyrics(reader.result);
           };
         }
       }
     });
   });
 
-  var interval = null;
-  var isClosed = false;
   $(document).on('keydown', function (event) {
-    if (event.key === "ArrowDown" && interval == null)
-      next();
-    if (event.key === "ArrowUp" && interval == null) 
-      prev();
-    if (event.key == "Escape")
-      $("#settings").fadeToggle();
-    if (event.key == " "){
-      if (isClosed) {
-        show();
-        isClosed = false;
+
+    if (event.key === "ArrowDown"){
+      if (lyricPosition < LYRICS_MAIN.length) lyricPosition++;
+      //sendMessage('position', lyricPosition)
+      updateLyrics();
+    }
+    if (event.key === "ArrowUp"){
+      if (lyricPosition > 0) lyricPosition--;
+      //sendMessage('position', lyricPosition)
+      updateLyrics();
+    } 
+    if (event.key == "Escape") {
+      $menu.toggleClass('is-hidden-menu');
+
+      console.log($menu.hasClass('is-hidden-menu'));
+      
+      if (!$menu.hasClass('is-hidden-menu')) {
+        setTimeout(() => $('#open_lyrics_file').focus(), 50);
       }
       else {
-        hide();
-        isClosed = true;
+        document.activeElement.blur();
+        setTimeout(() => $("#prompt-container").focus(), 50);
       }
     }
-  });
+    if(event.keyCode === 70) {
+      $mlyrics.removeClass();
+      
+      fontPosition == FONTS.length ? fontPosition = 0 : fontPosition++;
 
-  $(document).on('keyup', function (event) {
-    var events = ["ArrowDown", "ArrowUp"];
-    if ((events.indexOf(event.key) !== -1) && interval != null) {
-      clearInterval(interval);
-      interval = null;
-    } 
+      console.log(`Changing font to ${FONTS[fontPosition]}`);
+      $mlyrics.addClass(FONTS[fontPosition]);
+    }
+
+    if (event.keyCode == 187) {
+      zoom = zoom + .25;
+      $mlyrics.css('zoom', zoom);
+    }
+    if (event.keyCode == 189) {
+      zoom = zoom - .25;
+      $mlyrics.css('zoom', zoom);
+    }
+
+    if (event.key == " "){
+      $mlyrics.toggleClass("off");
+      $slyrics.toggleClass("off");
+    }
   });
 
   let font = 'arial';
   let zoom = 1;
 
-  $('#select-bg-color').on('change', function () {
+  $('#bg-color').on('change', function () {
     $('#wrapper').css('background', $(this).val());
+    console.log('Meow')
   });
   $('#text-color').on('change', function () {
-    $('#lyrics').css('color', $(this).val());
+    $mlyrics.css('color', $(this).val());
   });
   $('#text-font').on('change', function () {
-    $('#lyrics').removeClass(font);
+    $mlyrics.removeClass(font);
     font = $(this).val();
-    $('#lyrics').addClass(font);
+    $mlyrics.addClass(font);
   });
   $('#zoom-up').on('click', function () {
     zoom = zoom + .25;
-    $('#lyrics').css('zoom', zoom);
+    $mlyrics.css('zoom', zoom);
     //$('#lyrics-sub').css('zoom', zoom);
   });
   $('#zoom-down').on('click', function () {
     zoom = zoom - .25;
-    $('#lyrics').css('zoom', zoom);
+    $mlyrics.css('zoom', zoom);
     //$('#lyrics-sub').css('zoom', zoom);
   });
 });

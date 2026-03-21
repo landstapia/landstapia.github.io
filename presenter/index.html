@@ -3,14 +3,16 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <title>Prompter</title>
-  <script type="text/javascript" src="scripts/dependencies/jquery.min.js"></script> 
-  <script type="text/javascript" src="scripts/app.js"></script>
+  
+  <script src="https://code.jquery.com/jquery-4.0.0-beta.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+
+  <script type="text/javascript" src="./scripts/app.js"></script>
   <link rel="stylesheet" href="styles/app.css"></link>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
-
   <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Atma:wght@600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Birthstone&display=swap" rel="stylesheet">
@@ -27,107 +29,101 @@
   <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Nabla&display=swap" rel="stylesheet">
-
-
 </head>
 <body>
   <div id="wrapper">
     <div id="lyrics" class="arial"></div>
     <div id="lyrics-sub" class="arial"></div>
   </div>
-  <div id="settings" class="columns">
-    <div class="field column is-2">
-      <label class="label"> Background Color: </label>
-      <div class="control has-icons-left">
-        <div class="select bg-color">
-          <select name="bg-color" id="select-bg-color">
-            <option value="">Transparent </option>
-            <option value="#0000ff">Blue</option>
-            <option value="#ff0000">Red</option>
-            <option value="#00ff00">Green</option>
-            <option value="#000000">Black</option>
-          </select>
-           <span class="icon is-left">
-            <i class="fas fa-fill"></i>
-          </span>
+  <div id="settings" class="messenger-menu">
+    <div class="container">        
+     
+      <div class="columns is-mobile is-vcentered is-variable is-2">
+
+        <div class="column">
+          <div class="field">
+            <label class="label">Content:</label>
+            <input class="file-input" type="file" id="open_lyrics_file">
+            <button class="messenger-btn" onclick="document.getElementById('open_lyrics_file').click()">
+              Select File
+            </button>
+            <p id="status-display" class="help-text">Click to select mark-up file.</p>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="field column is-2">
-      <label class="label"> Font Color: </label>
-      <div class="control has-icons-left">
-        <div class="select text-color">
-          <select name="text-color" id="text-color">
-            <option value="#ffffff">White</option>
-            <option value="#000000">Black</option>
-          </select>
-           <span class="icon is-left">
-            <i class="fas fa-droplet"></i>
-          </span>
+
+        <div class="column">
+          <div class="field">
+            <label class="label is-small">Background:</label>
+            <div class="control select-wrapper">
+              <select id="bg-color" class="messenger-select">
+                <option value="rgba(0,0,0,0)">⚪ Transparent</option>
+                <option value="rgba(255,0,0,1)">🔴 Red</option>
+                <option value="rgba(0,255,0,1)">🟢 Green</option>
+                <option value="rgba(0,0,255,1)">🔵 Blue</option>
+                <option value="rgba(0,0,0,1)">⚫ Black</option>
+              </select>
+            </div>
+            <p id="status-display" class="help-text">&nbsp;</p>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="field column is-2">
-      <label class="label"> Font: </label>
-      <div class="control has-icons-left">
-        <div class="select font">
-          <select name="text-font" id="text-font">
-            <option value="arial" class="arial">Arial</option>
-            <option value="atma" class="atma">Atma</option>
-            <option value="birthstone" class="birthstone">Birthstone</option>
-            <option value="cookie" class="cookie">Cookie</option>
-            <option value="englebert" class="englebert">Englebert</option>
-            <option value="ms-madi" class="ms-madi">Ms Madi</option>
-            <option value="pattaya" class="pattaya">Pattaya</option>
-            <option value="rouge-script" class="rouge-script">Rouge Script</option>
-            <option value="sriracha" class="sriracha">Sriracha</option>
-            <option value="story-script" class="story-script">Story Script</option>
-            <option value="fleur-de-leah" class="fleur-de-leah">Fleur De Leah</option>
-            <option value="titan-one" class="titan-one">Titan one</option>
-            <option value="emilys-candy" class="emilys-candy">Emilys candy</option>
-            <option value="montserrat" class="montserrat">Montserrat</option>
-            <option value="satisfy" class="satisfy">Satisfy</option>
-            <option value="permanent-marker" class="permanent-marker">Permanent Marker</option>
-          </select>
-           <span class="icon is-left">
-            <i class="fas fa-font"></i>
-          </span>
+
+        <div class="column">
+          <div class="field">
+            <label class="label is-small">Text Color:</label>
+            <div class="control select-wrapper">
+              <select id="text-color" class="messenger-select">
+                <option value="#ffffff">⚪ White</option>
+                <option value="#000000">⚫ Black</option>
+                <option value="#ffeb3b">🟡 Yellow</option>
+              </select>
+            </div>
+            <p id="status-display" class="help-text">&nbsp;</p>
+          </div>
         </div>
+
+        <div class="column">
+          <div class="field">
+            <label class="label is-small">Font:</label>
+            <div class="control select-wrapper">
+              <select id="text-font" class="messenger-select">
+                <option value="arial" class="arial">Arial</option>
+                <option value="atma" class="atma">Atma</option>
+                <option value="birthstone" class="birthstone">Birthstone</option>
+                <option value="cookie" class="cookie">Cookie</option>
+                <option value="englebert" class="englebert">Englebert</option>
+                <option value="ms-madi" class="ms-madi">Ms Madi</option>
+                <option value="pattaya" class="pattaya">Pattaya</option>
+                <option value="rouge-script" class="rouge-script">Rouge Script</option>
+                <option value="sriracha" class="sriracha">Sriracha</option>
+                <option value="story-script" class="story-script">Story Script</option>
+                <option value="fleur-de-leah" class="fleur-de-leah">Fleur De Leah</option>
+                <option value="titan-one" class="titan-one">Titan one</option>
+                <option value="emilys-candy" class="emilys-candy">Emilys candy</option>
+                <option value="montserrat" class="montserrat">Montserrat</option>
+                <option value="satisfy" class="satisfy">Satisfy</option>
+                <option value="permanent-marker" class="permanent-marker">Permanent Marker</option>
+            </select>
+            </div>
+            <p id="status-display" class="help-text">Press <code>F</code> to navigate to all fonts.</p>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="field">
+            <label class="label is-small">Zoom:</label>
+            <div class="buttons are-small has-addons" style="margin: 0;">
+              <button class="button is-dark messenger-btn-circle" id="zoom-up">
+                <i class="fas fa-plus"></i>
+              </button>
+              <button class="button is-dark messenger-btn-circle" id="zoom-down">
+                <i class="fas fa-minus"></i>
+              </button>
+            </div>
+            <p id="status-display" class="help-text">Press <code>+</code>/<code>-</code> to adjust font size.</p>
+          </div>
+        </div>
+
       </div>
-    </div>
-    <div class="field column is-2.25" >
-      <label class="label"> Lyrics File: </label>
-      <div class="file">
-        <label class="file-label">
-          <input class="file-input" type='file' id="open_lyrics_file"/>
-          <span class="file-cta">
-          <span class="file-icon">
-            <i class="fas fa-upload"></i>
-          </span>
-          <span class="file-label"> Choose Lyrics File...</span>
-        </label>
-      </div>
-    </div>
-    <div class="field column is-2">
-      <label class="label"> Mark-up Guide:</label>
-      <p><span class="tag is-white">[Title]</span> for titles </p>
-      <p><span class="tag is-white">[Subtitle]</span> for subtitles or alternate lyrics</p>
-      <p><span class="tag is-white">=</span> to separate lines</p> 
-    </div>
-    <div class="field column is-2">
-      <label class="label"> Controls: </label>
-      <span class="tag is-white">Esc</span> to hide this bar.
-      <label class="label"> Zoom: </label>
-      <button class="button white" id="zoom-up">
-        <span class="icon is-small">
-          <i class="fas fa-plus"></i>
-        </span>
-      </button>
-      <button class="button white" id="zoom-down">
-        <span class="icon is-small">
-          <i class="fas fa-minus"></i>
-        </span>
-      </button>
     </div>
   </div>
 </body>

@@ -1,3 +1,4 @@
+
 .arial {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold!important;
@@ -86,6 +87,14 @@
   font-style: normal;
 }
 
+:root {
+  --lyric-speed: 1s;
+  --m-blue: #0084FF;
+  --m-black: #050505;
+  --m-dark-grey: #1c1e21;
+  --m-border: #333;
+}
+
 html {
   background-color: rgba(0,0,0,0)!important;
   height: 100%;
@@ -103,7 +112,6 @@ body {
   width: 100%;
 }
 #wrapper {
-  background-color: rgba(0,0,0,0)!important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -174,50 +182,136 @@ body {
   line-height: 28px!important;
 }
 
+.column {
+  text-align: left;
+}
 
-.scale-on {
-  opacity: 1;
-  transform: scale(1);
-  transition: opacity 1s, transform 1s;
+/* The Bottom Menu Bar */
+#settings {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  min-height: 15rem;
+  background: var(--m-black);
+  border-top: 1px solid var(--m-border);
+  box-shadow: 0 -10px 30px rgba(0,0,0,0.8);
+  padding: 1.5rem;
+  z-index: 1000;
+  transition: transform 0.4s cubic-bezier(0.1, 0.7, 0.1, 1);
 }
-.fade {
-  opacity: 0;
-  transform: scale(1);
-  transition: opacity 0.25s;
+
+/* Hidden State for Esc key toggle */
+#settings.is-hidden-menu {
+  transform: translateY(105%);
 }
-.scale-off {
-  opacity: 0;
-  transform: scale(0.8);
+
+/* Modern Labels */
+.label {
+  color: var(--m-blue) !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 1.5rem!important;
+  margin-bottom: 0.75rem !important;
 }
+
+/* Rounded Messenger Buttons */
+.messenger-btn {
+  background: var(--m-blue) !important;
+  color: #fff !important;
+  border-radius: 45px !important;
+  border: none;
+  cursor: pointer;
+  padding: 1.75rem 2.5rem;
+  font-weight: bold;
+  display: inline-block;
+  transition: opacity 0.2s;
+  font-size: 1.5rem;
+}
+
+.messenger-btn-circle {
+  background: var(--m-dark-grey);
+  color: white;
+  border: 1px solid var(--m-border);
+  border-radius: 50%;
+  width: 90px;
+  height: 90px;
+  cursor: pointer;
+  margin-right: 5px;
+  font-size: 1.5rem;
+  transition: 0.2s;
+}
+
+.messenger-btn-circle:hover {
+  background: var(--m-blue);
+}
+
+/* Styled Select Dropdowns */
+.messenger-select {
+  background-color: var(--m-dark-grey);
+  border: 1px solid var(--m-border);
+  color: #fff;
+  height: 90px;
+  border-radius: 45px;
+  padding: 8px 35px;
+  appearance: none;
+  width: 100%;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+.messenger-select option {
+  padding: 12px 20px; 
+  cursor: pointer; 
+  border-bottom: 1px solid var(--m-border); 
+  color: #ddd; 
+  font-size: 1.5rem; 
+}
+.messenger-select option:active {
+  background-color: var(--m-blue); 
+  color: #fff; 
+  font-weight: bold; 
+}
+
+.select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* Guide Tags */
+.tag-outline {
+  border: 1px solid var(--m-border);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.help-text-inline {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+
+
+/* Animation Logic */
 .on {
   opacity: 1;
-  transform: scale(1);
-  transition: opacity 1s, transform 1s;
-}
-.fade {
-  opacity: 0;
-  transform: scale(1);
-  transition: opacity 0.25s;
+  transition: opacity 0.5s ease;
 }
 .off {
   opacity: 0;
-  transform: scale(1);
+  transition: opacity 0.25s ease;
 }
 
-#settings {
-  box-shadow: 0px 0px 15px #000!important;
-  border-bottom: 3px solid white;
-  padding: 20px;
-  margin: 0;
-  width: 100%;
-  height: 200px;
-  position: fixed;
-  top: 0;
-  background: #000000;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(36, 57, 64, 1) 51%, rgba(77, 64, 0, 1) 100%);
-  z-index: 99;
-  overflow: hidden;
+/* Define the keyframes */
+@keyframes lyricSwap {
+  0%   { opacity: 1; transform: scale(1); }
+  25%  { opacity: 0; transform: scale(1); } /* Fade & Shrink */
+  50%  { opacity: 0; transform: scale(0.8); } /* Hold while JS swaps text */
+  100% { opacity: 1; transform: scale(1); }   /* Grow & Fade back in */
 }
-.column {
-  text-align: left;
+
+.animate-lyric {
+  animation: lyricSwap var(--lyric-speed) cubic-bezier(0.18, 0.89, 0.32, 1) forwards;
 }
