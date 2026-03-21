@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prompter Pro | Dark Messenger</title>
+  <title>Prompter v2</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
   <script src="https://code.jquery.com/jquery-4.0.0-beta.min.js"></script>
 
@@ -137,7 +137,7 @@
   <div id="wrapper">
     <div id="content-area">
       <div id="prompt-container">
-        <p class="has-text-grey">Ready to go. Select folder or search script.</p>
+        <p class="has-text-grey">Select folder or search file.</p>
       </div>
     </div>
 
@@ -146,7 +146,7 @@
         <div class="columns is-mobile is-multiline">
           <div class="column is-12-mobile is-3-tablet">
             <div class="field">
-              <label class="label">Library Root</label>
+              <label class="label">Library:</label>
               <input type="file" id="directory-selector" webkitdirectory directory multiple style="display:none">
               <button class="messenger-btn" onclick="document.getElementById('directory-selector').click()">
                 Select Folder
@@ -157,7 +157,7 @@
 
           <div class="column is-12-mobile is-9-tablet">
             <div class="field" style="position: relative;">
-              <label class="label">Quick Search (Esc to Focus)</label>
+              <label class="label">Quick Search:</label>
               <div class="control has-icons-left">
                 <input class="input" type="text" id="script-search" placeholder="Search by name..." autocomplete="off">
               </div>
