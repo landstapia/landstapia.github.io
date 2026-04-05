@@ -200,6 +200,18 @@
             fileMap[file.webkitRelativePath] = file;
           }
         });
+       fileMap = Object.entries(fileMap)
+          .sort(([, fileA], [, fileB]) => {
+            // Access the 'name' property on the File object
+            return fileA.name.localeCompare(fileB.name, undefined, { 
+              numeric: true, 
+              sensitivity: 'base' 
+            });
+          })
+          .reduce((acc, [path, file]) => {
+            acc[path] = file;
+            return acc;
+          }, {});
         $("#status-display").text(`${Object.keys(fileMap).length} files indexed.`);
         $search.focus();
       });
