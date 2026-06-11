@@ -472,7 +472,7 @@ body {
 
 .help-text, .help-text-inline, .status-display {
   color: #666;
-  font-size: 1.5rem;
+  font-size: 0.75rem;
   text-align: center;
   margin-top: 5px;
   min-height: 1.2em; 
