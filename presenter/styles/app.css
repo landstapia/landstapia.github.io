@@ -1,7 +1,6 @@
-
 .arial {
   font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold!important;
+  font-weight: bold !important;
   font-style: normal;
 }
 .atma {
@@ -49,46 +48,211 @@
   font-weight: 400;
   font-style: normal;
 }
-
 .fleur-de-leah {
   font-family: "Fleur De Leah", cursive;
   font-weight: 400;
   font-style: normal;
 }
-
 .titan-one {
   font-family: "Titan One", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
-
 .emilys-candy {
   font-family: "Emilys Candy", serif;
   font-weight: 400;
   font-style: normal; 
 }
-
-.montserrat {
-  font-family: "Montserrat", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 800;
-  font-style: normal;
-}
-
 .satisfy {
   font-family: "Satisfy", cursive;
   font-weight: 400;
   font-style: normal;
 }
-
 .permanent-marker {
   font-family: "Permanent Marker", cursive;
   font-weight: 400;
   font-style: normal;
 }
+.nabla {
+  font-family: "Nabla", system-ui;
+  font-palette: --rocket; 
+}
+
+.montserrat {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+.bebas-neue {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+.caveat {
+  font-family: "Caveat", cursive;
+  font-weight: 700;
+  font-style: normal;
+}
+.playfair-display {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  font-style: italic;
+}
+.inter {
+  font-family: "Inter", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+.space-grotesk {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+.cinzel {
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+.raleway {
+  font-family: "Raleway", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+.quicksand {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+.dm-sans {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+.dynapuff {
+  font-family: "DynaPuff", system-ui;
+  font-weight: 500;
+  font-style: normal;
+}
+.sniglet {
+  font-family: "Sniglet", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+.great-vibes {
+  font-family: "Great Vibes", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+.lobster {
+  font-family: "Lobster", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.libre-baskerville {
+  font-family: "Libre Baskerville", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.cormorant {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+.marcellus {
+  font-family: "Marcellus", serif;
+  font-weight: 400;
+}
+.italiana {
+  font-family: "Italiana", serif;
+  font-weight: 400;
+}
+.medula-one {
+  font-family: "Medula One", sans-serif;
+  font-weight: 400;
+}
+.yeseva-one {
+  font-family: "Yeseva One", serif;
+  font-weight: 400;
+}
+
+/* --- HANDWRITTEN --- */
+.shadows-light {
+  font-family: "Shadows Into Light", cursive;
+  font-weight: 400;
+}
+.indie-flower {
+  font-family: "Indie Flower", cursive;
+  font-weight: 400;
+}
+
+.teko {
+  font-family: "Teko", sans-serif;
+  text-transform: uppercase;
+  font-size: 1.2em;
+}
+.pathway-gothic {
+  font-family: "Pathway Gothic One", sans-serif;
+  text-transform: uppercase;
+}
+
+.arvo {
+  font-family: "Arvo", serif;
+  font-weight: 700;
+}
+.roboto-slab {
+  font-family: "Roboto Slab", serif;
+  font-weight: 700;
+}
+.zilla-slab {
+  font-family: "Zilla Slab", serif;
+  font-weight: 700;
+}
+
+.lexend {
+  font-family: "Lexend", sans-serif;
+  font-weight: 600;
+}
+.syncopate {
+  font-family: "Syncopate", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+}
+.outfit {
+  font-family: "Outfit", sans-serif;
+  font-weight: 600;
+}
+
+.bungee-shade {
+  font-family: "Bungee Shade";
+}
+.monoton {
+  font-family: "Monoton";
+}
+.staatliches {
+  font-family: "Staatliches";
+}
+.bangers {
+  font-family: "Bangers";
+}
+.tenor-sans {
+  font-family: "Tenor Sans";
+}
+.forum {
+  font-family: "Forum";
+}
+.prata {
+  font-family: "Prata";
+}
+.comfortaa {
+  font-family: "Comfortaa";
+}
+.modak {
+  font-family: "Modak";
+}
 
 :root {
-  --lyric-speed: 1s;
+  --lyric-speed: 800ms;
   --m-blue: #0084FF;
   --m-black: #050505;
   --m-dark-grey: #1c1e21;
@@ -124,8 +288,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
-  text-shadow:     
+  color: white; 
+  text-shadow:      
     1px 1px 15px rgba(0,0,0,1), 
     -1px -1px 15px rgba(0,0,0,1), 
     1px -1px 15px rgba(0,0,0,1), 
@@ -133,22 +297,23 @@ body {
   height: 800px;
   width: 100%;
 }
-#lyrics .title-text {
-  color: white!important;
-  font-size: 80px!important;
-  line-height: 90px!important;
-}
-#lyrics .subtitle-text {
-  color: white!important;
-  font-size: 40px!important;
-  line-height: 60px!important;
-}
-#lyrics .normal-text {
-  color: white!important;
-  font-size: 60px!important;
-  line-height: 70px!important;
+
+#lyrics .title-text { 
+  color: inherit; 
+  font-size: 80px!important; 
+  line-height: 90px!important; 
 }
 
+#lyrics .subtitle-text { 
+  color: inherit; 
+  font-size: 40px!important; 
+  line-height: 60px!important; 
+}
+#lyrics .normal-text { 
+  color: inherit; 
+  font-size: 60px!important; 
+  line-height: 70px!important; 
+}
 
 #lyrics-sub {
   bottom: 0;
@@ -157,7 +322,7 @@ body {
   justify-content: center;
   align-items: center;
   color: white;
-  text-shadow:     
+  text-shadow:      
     1px 1px 15px rgba(0,0,0,1), 
     -1px -1px 15px rgba(0,0,0,1), 
     1px -1px 15px rgba(0,0,0,1), 
@@ -166,68 +331,90 @@ body {
   width: 100%;
 }
 
-#lyrics-sub .title-text {
-  color: white!important;
-  font-size: 35px!important;
-  line-height: 40px!important;
-}
-#lyrics-sub .subtitle-text {
-  color: white!important;
-  font-size: 30px!important;
-  line-height: 35px!important;
-}
-#lyrics-sub .normal-text {
-  color: white!important;
-  font-size: 25px!important;
-  line-height: 28px!important;
+#lyrics-sub .title-text 
+{ 
+  color: inherit; 
+  font-size: 35px!important; 
+  line-height: 40px!important; 
 }
 
+#lyrics-sub .subtitle-text 
+{ 
+  color: inherit; 
+  font-size: 30px!important; 
+  line-height: 35px!important; 
+}
+
+#lyrics-sub .normal-text 
+{ 
+  color: inherit; 
+  font-size: 25px!important; 
+  line-height: 28px!important; 
+}
+
+/* ALIGNMENT FIX */
 .column {
-  text-align: left;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; 
+  padding: 0.5rem !important; /* Reduced padding between columns */
 }
 
-/* The Bottom Menu Bar */
+/* MAXIMIZING WIDTH SPACE */
 #settings {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
   height: auto;
-  min-height: 15rem;
+  min-height: 15rem; 
   background: var(--m-black);
   border-top: 1px solid var(--m-border);
   box-shadow: 0 -10px 30px rgba(0,0,0,0.8);
-  padding: 1.5rem;
+  padding: 1.5rem 1rem; /* Reduced horizontal padding for edge-to-edge look */
   z-index: 1000;
   transition: transform 0.4s cubic-bezier(0.1, 0.7, 0.1, 1);
 }
 
-/* Hidden State for Esc key toggle */
+#settings .container {
+  max-width: 100% !important; /* Force the Bulma container to take all space */
+  width: 100%;
+  padding: 0;
+}
+
 #settings.is-hidden-menu {
   transform: translateY(105%);
 }
 
-/* Modern Labels */
 .label {
   color: var(--m-blue) !important;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-size: 1.5rem!important;
   margin-bottom: 0.75rem !important;
+  text-align: left;
 }
 
-/* Rounded Messenger Buttons */
+/* FORCED STRAIGHT ALIGNMENT */
+.messenger-btn, .messenger-select {
+  height: 90px !important; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .messenger-btn {
   background: var(--m-blue) !important;
   color: #fff !important;
   border-radius: 45px !important;
   border: none;
   cursor: pointer;
-  padding: 1.75rem 2.5rem;
+  padding: 0 1.5rem; /* Slightly reduced inner padding to fit more width */
   font-weight: bold;
-  display: inline-block;
   transition: opacity 0.2s;
   font-size: 1.5rem;
+  width: 100%;
 }
 
 .messenger-btn-circle {
@@ -241,36 +428,41 @@ body {
   margin-right: 5px;
   font-size: 1.5rem;
   transition: 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .messenger-btn-circle:hover {
   background: var(--m-blue);
 }
 
-/* Styled Select Dropdowns */
 .messenger-select {
   background-color: var(--m-dark-grey);
   border: 1px solid var(--m-border);
   color: #fff;
-  height: 90px;
   border-radius: 45px;
-  padding: 8px 35px;
+  padding: 0 25px;
   appearance: none;
   width: 100%;
   cursor: pointer;
   font-size: 1.5rem;
+  text-align: center;
 }
+
 .messenger-select option {
-  padding: 12px 20px; 
-  cursor: pointer; 
-  border-bottom: 1px solid var(--m-border); 
-  color: #ddd; 
-  font-size: 1.5rem; 
+  padding: 15px 20px; 
+  background-color: var(--m-dark-grey);
 }
-.messenger-select option:active {
-  background-color: var(--m-blue); 
-  color: #fff; 
-  font-weight: bold; 
+
+/* Specific styling for the speed numeric input */
+#speed-ms {
+  outline: none;
+}
+#speed-ms::-webkit-inner-spin-button, 
+#speed-ms::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
 }
 
 .select-wrapper {
@@ -278,40 +470,130 @@ body {
   width: 100%;
 }
 
-/* Guide Tags */
-.tag-outline {
-  border: 1px solid var(--m-border);
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  color: #888;
-}
-
-.help-text-inline {
+.help-text, .help-text-inline, .status-display {
   color: #666;
-  font-size: 0.85rem;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 5px;
+  min-height: 1.2em; 
 }
 
-
+/* Ensure columns stretch to fill the maximized space */
+.columns.is-mobile {
+  align-items: flex-end; 
+  margin-left: 7rem !important;
+  margin-right: 0 !important;
+}
 
 /* Animation Logic */
-.on {
-  opacity: 1;
-  transition: opacity 0.5s ease;
-}
-.off {
-  opacity: 0;
-  transition: opacity 0.25s ease;
+.on { opacity: 1; transition: opacity 0.5s ease; }
+.off { opacity: 0; transition: opacity 0.25s ease; }
+
+/* --- KEYFRAMES --- */
+
+/* Master Animation Class */
+.animate-lyric {
+  animation-duration: var(--lyric-speed);
+  /* Cubic-bezier provides the smooth ease-in/out feel */
+  animation-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1); 
+  animation-fill-mode: forwards;
 }
 
-/* Define the keyframes */
+/* --- SMOOTHED TRANSITIONS --- */
+
 @keyframes lyricSwap {
   0%   { opacity: 1; transform: scale(1); }
-  25%  { opacity: 0; transform: scale(1); } /* Fade & Shrink */
-  50%  { opacity: 0; transform: scale(0.8); } /* Hold while JS swaps text */
-  100% { opacity: 1; transform: scale(1); }   /* Grow & Fade back in */
+  35%  { opacity: 0.3; transform: scale(0.97); } 
+  50%  { opacity: 0; transform: scale(0.95); }
+  65%  { opacity: 0.3; transform: scale(1.03); } 
+  100% { opacity: 1; transform: scale(1); }
 }
 
-.animate-lyric {
-  animation: lyricSwap var(--lyric-speed) cubic-bezier(0.18, 0.89, 0.32, 1) forwards;
+@keyframes fadeOnly {
+  0%   { opacity: 1; }
+  50%  { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideUp {
+  0%   { opacity: 1; transform: translateY(0); }
+  50%  { opacity: 0; transform: translateY(-20px); }
+  51%  { transform: translateY(20px); } 
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  0%   { opacity: 1; transform: translateY(0); }
+  50%  { opacity: 0; transform: translateY(20px); }
+  51%  { transform: translateY(-20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes zoomIn {
+  0%   { opacity: 1; transform: scale(1); }
+  50%  { opacity: 0; transform: scale(1.5); }
+  51%  { transform: scale(0.5); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes flipX {
+  0%   { opacity: 1; transform: perspective(400px) rotateX(0deg); }
+  50%  { opacity: 0; transform: perspective(400px) rotateX(90deg); }
+  51%  { transform: perspective(400px) rotateX(-90deg); }
+  100% { opacity: 1; transform: perspective(400px) rotateX(0deg); }
+}
+
+@keyframes rotateIn {
+  0%   { opacity: 1; transform: rotate(0deg) scale(1); }
+  50%  { opacity: 0; transform: rotate(180deg) scale(0); }
+  51%  { transform: rotate(-180deg) scale(0); }
+  100% { opacity: 1; transform: rotate(0deg) scale(1); }
+}
+
+@keyframes blurFade {
+  0%   { opacity: 1; filter: blur(0px); }
+  50%  { opacity: 0; filter: blur(20px); }
+  100% { opacity: 1; filter: blur(0px); }
+}
+
+@keyframes roll3D {
+  0%   { opacity: 1; transform: rotateX(0deg) translateZ(0); }
+  50%  { opacity: 0; transform: rotateX(180deg) translateZ(100px); }
+  51%  { transform: rotateX(-180deg) translateZ(100px); }
+  100% { opacity: 1; transform: rotateX(0deg) translateZ(0); }
+}
+
+@keyframes doorLeft {
+  0%   { opacity: 1; transform: perspective(1000px) rotateY(0deg); transform-origin: left; }
+  50%  { opacity: 0; transform: perspective(1000px) rotateY(-90deg); transform-origin: left; }
+  51%  { transform: perspective(1000px) rotateY(90deg); transform-origin: left; }
+  100% { opacity: 1; transform: perspective(1000px) rotateY(0deg); transform-origin: left; }
+}
+
+@keyframes newspaper {
+  0%   { opacity: 1; transform: rotate(0deg) scale(1); }
+  50%  { opacity: 0; transform: rotate(720deg) scale(0); }
+  51%  { transform: rotate(-720deg) scale(0); }
+  100% { opacity: 1; transform: rotate(0deg) scale(1); }
+}
+
+@keyframes cubeSpin {
+  0%   { opacity: 1; transform: rotateY(0deg); }
+  50%  { opacity: 0; transform: rotateY(90deg); }
+  51%  { transform: rotateY(-90deg); }
+  100% { opacity: 1; transform: rotateY(0deg); }
+}
+
+@keyframes splitReveal {
+  0%   { opacity: 1; letter-spacing: normal; }
+  50%  { opacity: 0; letter-spacing: 50px; }
+  51%  { letter-spacing: -50px; }
+  100% { opacity: 1; letter-spacing: normal; }
+}
+
+@keyframes diagWipe {
+  0%   { opacity: 1; transform: translate(0,0); }
+  50%  { opacity: 0; transform: translate(100px, -100px); }
+  51%  { transform: translate(-100px, 100px); }
+  100% { opacity: 1; transform: translate(0,0); }
 }
