@@ -223,6 +223,34 @@
   font-weight: 600;
 }
 
+.bungee-shade {
+  font-family: "Bungee Shade";
+}
+.monoton {
+  font-family: "Monoton";
+}
+.staatliches {
+  font-family: "Staatliches";
+}
+.bangers {
+  font-family: "Bangers";
+}
+.tenor-sans {
+  font-family: "Tenor Sans";
+}
+.forum {
+  font-family: "Forum";
+}
+.prata {
+  font-family: "Prata";
+}
+.comfortaa {
+  font-family: "Comfortaa";
+}
+.modak {
+  font-family: "Modak";
+}
+
 :root {
   --lyric-speed: 800ms;
   --m-blue: #0084FF;
